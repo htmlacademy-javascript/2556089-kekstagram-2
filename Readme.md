@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Михаил Воронов](https://up.htmlacademy.ru/javascript-individual/2/user/2556089).
-* Наставник: `Неизвестно`.
+* Наставник: [Александр Сударев](https://htmlacademy.ru/profile/id1152185).
 
 ---
 
