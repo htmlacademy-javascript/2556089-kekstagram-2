@@ -27,10 +27,7 @@ const getRandomIdFromRangeGenerator = (min, max) => {
 
 const generateRandomIdPost = getRandomIdFromRangeGenerator(1, 25);
 const generateRandomIdPhoto = getRandomIdFromRangeGenerator(1, 25);
-const randomCommentId = getRandomIdFromRangeGenerator(1, 5000);
+const generateRandomIdComment = getRandomIdFromRangeGenerator(1, 5000);
 
 
-export {getRandomInteger};
-export {generateRandomIdPost};
-export {generateRandomIdPhoto};
-export {randomCommentId};
+export {getRandomInteger, generateRandomIdPost,generateRandomIdPhoto, generateRandomIdComment };
