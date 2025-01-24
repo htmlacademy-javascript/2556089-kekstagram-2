@@ -48,20 +48,20 @@ const convertTimeToMinutes = (timeInNormalFormat) => {
 
 const isTimeAvailable = (startWorkingDay, endWorkingDay, startMeeting, durationMeeting) => {
 
-  const getStartWorkingDayinMinutes = convertTimeToMinutes (startWorkingDay);
-  //console.log (getStartWorkingDayinMinutes);
+  const StartWorkingDayinMinutes = convertTimeToMinutes (startWorkingDay);
+  //console.log (StartWorkingDayinMinutes);
 
-  const getEndWorkingDayinMinutes = convertTimeToMinutes (endWorkingDay);
-  //console.log (getEndWorkingDayinMinutes);
+  const EndWorkingDayinMinutes = convertTimeToMinutes (endWorkingDay);
+  //console.log (EndWorkingDayinMinutes);
 
-  const getStartMeetingInMinutes = convertTimeToMinutes (startMeeting);
-  //console.log (getStartMeetingInMinutes);
+  const StartMeetingInMinutes = convertTimeToMinutes (startMeeting);
+  //console.log (StartMeetingInMinutes);
 
-  if (getStartMeetingInMinutes > getEndWorkingDayinMinutes || getStartMeetingInMinutes < getStartWorkingDayinMinutes) {
+  if (StartMeetingInMinutes > EndWorkingDayinMinutes || StartMeetingInMinutes < StartWorkingDayinMinutes) {
     return false;
   }
 
-  if (getStartMeetingInMinutes + durationMeeting > getEndWorkingDayinMinutes) {
+  if (StartMeetingInMinutes + durationMeeting > EndWorkingDayinMinutes) {
     return false;
   } else {
     return true;
