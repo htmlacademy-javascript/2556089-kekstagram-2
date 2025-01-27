@@ -4,6 +4,20 @@ const TEXT_COMMENTS = ['Всё отлично!', 'В целом всё непл�
 
 const USERS_NAME = ['Юлия', 'Михаил', 'Захар', 'Заяц', 'Саша', 'Граф де Бильбо', 'ЖП', 'The_best_programmer_ever', 'Анононим', 'Конь в яблоках', 'Колян', 'Изя Шниперсон', 'Арнольд Ш.', 'Артем', 'Женя', 'Дж.Байден', 'Трамп', 'Вовка'];
 
+const minCountIdPost = 1;
+const maxCountIdPost = 25;
+const minCountIdPhoto = 1;
+const maxCountIdPhoto = 25;
+const minCountIdComment = 1;
+const maxCountIdComment = 5000;
+const minCountAvatar = 1;
+const maxCountAvatar = 6;
+const minCountILikes = 30;
+const maxCountILikes = 200;
+const minCommentsCount = 0;
+const maxCommentsCount = 30;
+
+
 const POSTS_ARRAY_LENGTH = 25; // Длина массива с объектами (по ДЗ - это 25);
 
-export {DESCRIPTION_PHOTOS, TEXT_COMMENTS, USERS_NAME, POSTS_ARRAY_LENGTH};
+export {DESCRIPTION_PHOTOS, TEXT_COMMENTS, USERS_NAME, POSTS_ARRAY_LENGTH, minCountIdPost, maxCountIdPost, minCountIdPhoto, maxCountIdPhoto, minCountIdComment, maxCountIdComment, minCountAvatar, maxCountAvatar, minCountILikes, maxCountILikes, minCommentsCount, maxCommentsCount};
