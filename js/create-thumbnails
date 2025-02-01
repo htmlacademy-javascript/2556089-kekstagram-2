@@ -1,0 +1,52 @@
+/* Задача:
+
+Отобразить фотографии других пользователей.
+Заведите модуль, который будет отвечать за отрисовку миниатюр. - OK
+На основе временных данных для разработки и шаблона #picture:
+создайте DOM-элементы, соответствующие фотографиям, и заполните их данными:
+
+Адрес изображения url подставьте как атрибут src изображения.
+Описание изображения description подставьте в атрибут alt изображения.
+Количество лайков likes выведите в блок .picture__likes.
+Количество комментариев comments выведите в блок .picture__comments.
+Отрисуйте сгенерированные DOM-элементы в блок .pictures. Для вставки элементов используйте DocumentFragment.
+
+Подключите модуль в проект.
+*/
+
+/* Шаблон изображения случайного пользователя:
+  <template id="picture">
+    <a href="#" class="picture">
+      <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
+      <p class="picture__info">
+        <span class="picture__comments"></span>
+        <span class="picture__likes"></span>
+      </p>
+    </a>
+  </template>
+  */
+
+import {createPosts} from './create-array-posts.js';
+
+const picturesList = document. querySelector('.pictures');
+const pictureItemTemplate = document.querySelector('#picture')
+.content
+.querySelector('.picture');
+
+const createdArray = createPosts();
+
+const picturesListFragment = document.createDocumentFragment();
+
+createdArray.forEach ((picture) => {
+const newPicture = pictureItemTemplate.cloneNode(true);
+newPicture.querySelector('.picture__img').src = picture.photo;
+newPicture.querySelector('.picture__img').alt = picture.description;
+newPicture.querySelector('.picture__likes').textContent = picture.likes;
+newPicture.querySelector('.picture__comments').textContent = picture.comments.length;
+picturesListFragment.append (newPicture);
+});
+
+picturesList.append(picturesListFragment);
+
+
+
