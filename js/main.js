@@ -1,2 +1,7 @@
-import {createPosts} from './create-array-posts.js';
-console.log (createPosts ());
+import { createPosts } from './create-array-posts.js';
+import { renderThumbnails } from './create-thumbnails.js';
+
+const createdArray = createPosts();
+renderThumbnails(createdArray);
+
+
