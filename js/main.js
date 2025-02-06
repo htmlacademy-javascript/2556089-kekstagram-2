@@ -7,3 +7,4 @@ renderThumbnails(createdArray);
 ViewPictureFullSize ();
 
 
+console.log(createdArray);
