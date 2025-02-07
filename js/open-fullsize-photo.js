@@ -14,11 +14,17 @@ const commentTemplate = document. querySelector('#comments-item')
   .content
   .querySelector('.social__comment');
 
+const clearOldComments = () => {
+  while (comments.firstChild) {
+    comments.removeChild(comments.lastChild);
+  }
+};
 
 const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  clearOldComments();
 };
 
 const onDocumentKeydown = (evt) => {
@@ -28,16 +34,9 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const clearOldComments = () => {
-  while (comments.firstChild) {
-    comments.removeChild(comments.lastChild);
-  }
-};
-
 clearOldComments();
 
 const renderComment = (comment)=> {
-
   const newCommentElement = commentTemplate.cloneNode(true);
   const commentImg = newCommentElement.querySelector('.social__picture');
   const commentText = newCommentElement.querySelector('.social__text');
@@ -45,16 +44,8 @@ const renderComment = (comment)=> {
   commentImg.src = comment.avatar;
   commentImg.alt = comment.name;
   commentText.textContent = comment.comment;
-
-
-  //const li = document.createElement('li');
-  //console.log(12121, comment);
-  //li.textContent = comment.comment;
-  //return li;
-  //};
   return newCommentElement;
 };
-
 
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
