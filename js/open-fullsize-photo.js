@@ -1,4 +1,6 @@
+
 import {isEscapeKey} from './utils.js';
+import {renderComment} from './render-comment.js';
 
 const fullPhoto = document.querySelector('.big-picture');
 const fullPhotoImg = fullPhoto.querySelector('.big-picture__img img');
@@ -10,10 +12,6 @@ const dowloaderNewComment = document.querySelector('.comments-loader');
 const commentsCount = document.querySelector('.social__comment-count');
 const comments = fullPhoto.querySelector('.social__comments');
 
-const commentTemplate = document. querySelector('#comments-item')
-  .content
-  .querySelector('.social__comment');
-
 const clearOldComments = () => {
   while (comments.firstChild) {
     comments.removeChild(comments.lastChild);
@@ -24,7 +22,6 @@ const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  clearOldComments();
 };
 
 const onDocumentKeydown = (evt) => {
@@ -34,18 +31,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-clearOldComments();
-
-const renderComment = (comment)=> {
-  const newCommentElement = commentTemplate.cloneNode(true);
-  const commentImg = newCommentElement.querySelector('.social__picture');
-  const commentText = newCommentElement.querySelector('.social__text');
-
-  commentImg.src = comment.avatar;
-  commentImg.alt = comment.name;
-  commentText.textContent = comment.comment;
-  return newCommentElement;
-};
 
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
@@ -58,6 +43,8 @@ const openFullPhoto = (picture) => {
   fullPhotoLikes.textContent = picture.likes;
   fullPhotoTotalComments.textContent = picture.comments.length;
 
+  clearOldComments();
+
   picture.comments.forEach((comment) => {
 
     const readyCommentElement = renderComment(comment);
@@ -68,3 +55,5 @@ const openFullPhoto = (picture) => {
 };
 
 export {openFullPhoto};
+
+
