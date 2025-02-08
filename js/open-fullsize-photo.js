@@ -1,4 +1,3 @@
-
 import {isEscapeKey} from './utils.js';
 import {renderComment} from './render-comment.js';
 
