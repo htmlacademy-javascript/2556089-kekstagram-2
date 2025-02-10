@@ -21,7 +21,7 @@ const clearOldComments = () => {
 const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   pageBody.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+  //document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onDocumentKeydown = (evt) => {
@@ -40,8 +40,8 @@ const addDataInPhoto = (pictureData) => {
 };
 
 const registerEvents = () => {
-  document.addEventListener('keydown', onDocumentKeydown);
-  buttonCloseFullPhoto.addEventListener('click', closeFullPhoto);
+  document.addEventListener('keydown', onDocumentKeydown, {once: true});
+  buttonCloseFullPhoto.addEventListener('click', closeFullPhoto, {once: true});
 };
 
 const renderComments = (commentsData) => {
