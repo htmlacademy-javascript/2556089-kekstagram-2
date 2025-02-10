@@ -1,6 +1,7 @@
 import {isEscapeKey} from './utils.js';
 import {renderComment} from './render-comment.js';
 
+const pageBody = document.querySelector('body');
 const fullPhoto = document.querySelector('.big-picture');
 const fullPhotoImg = fullPhoto.querySelector('.big-picture__img img');
 const fullPhotoCaption = fullPhoto.querySelector('.social__caption');
@@ -19,7 +20,7 @@ const clearOldComments = () => {
 
 const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -34,7 +35,7 @@ const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
   dowloaderNewComment.classList.add('hidden');
   commentsCount.classList.add('hidden');
-  document.body.classList.add('modal-open');
+  pageBody.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   fullPhotoImg.src = picture.photo;
   fullPhotoCaption.textContent = picture.description;
