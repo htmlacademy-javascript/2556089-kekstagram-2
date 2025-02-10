@@ -44,6 +44,10 @@ const registerEventsForCloseFullPhoto = () => {
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
   pageBody.classList.add('modal-open');
+  document.addEventListener('keydown', onDocumentKeydown);
+
+
+  pageBody.classList.add('modal-open');
   registerEventsForCloseFullPhoto ();
   addDataInPhoto (picture);
   clearOldComments();
