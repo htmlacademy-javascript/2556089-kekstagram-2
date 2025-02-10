@@ -7,9 +7,9 @@ const fullPhotoImg = fullPhoto.querySelector('.big-picture__img img');
 const fullPhotoCaption = fullPhoto.querySelector('.social__caption');
 const fullPhotoLikes = fullPhoto.querySelector('.likes-count');
 const fullPhotoTotalComments = fullPhoto.querySelector('.social__comment-total-count');
-const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel');
-const dowloaderNewComment = document.querySelector('.comments-loader');
-const commentsCount = document.querySelector('.social__comment-count');
+const buttonCloseFullPhoto = fullPhoto.querySelector('.big-picture__cancel');
+const dowloaderNewComment = fullPhoto.querySelector('.comments-loader');
+const commentsCount = fullPhoto.querySelector('.social__comment-count');
 const comments = fullPhoto.querySelector('.social__comments');
 
 const clearOldComments = () => {
@@ -31,27 +31,37 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const openFullPhoto = (picture) => {
-  fullPhoto.classList.remove('hidden');
-  dowloaderNewComment.classList.add('hidden');
-  commentsCount.classList.add('hidden');
-  pageBody.classList.add('modal-open');
+const addDataInPhoto = (pictureData) => {
+  fullPhotoImg.src = pictureData.photo;
+  fullPhotoImg.alt = pictureData.description;
+  fullPhotoCaption.textContent = pictureData.description;
+  fullPhotoLikes.textContent = pictureData.likes;
+  fullPhotoTotalComments.textContent = pictureData.comments.length;
+};
+
+const registerEvents = () => {
   document.addEventListener('keydown', onDocumentKeydown);
-  fullPhotoImg.src = picture.photo;
-  fullPhotoImg.alt = picture.description;
-  fullPhotoCaption.textContent = picture.description;
-  fullPhotoLikes.textContent = picture.likes;
-  fullPhotoTotalComments.textContent = picture.comments.length;
+  buttonCloseFullPhoto.addEventListener('click', closeFullPhoto);
+};
 
-  clearOldComments();
-
-  picture.comments.forEach((comment) => {
+const renderComments = (commentsData) => {
+  commentsData.forEach((comment) => {
 
     const readyCommentElement = renderComment(comment);
     comments.appendChild(readyCommentElement);
   });
 
-  buttonCloseFullPhoto.addEventListener('click', closeFullPhoto);
+};
+
+const openFullPhoto = (picture) => {
+  fullPhoto.classList.remove('hidden');
+  dowloaderNewComment.classList.add('hidden');
+  commentsCount.classList.add('hidden');
+  pageBody.classList.add('modal-open');
+  registerEvents ();
+  addDataInPhoto (picture);
+  clearOldComments();
+  renderComments (picture.comments);
 };
 
 export {openFullPhoto};
