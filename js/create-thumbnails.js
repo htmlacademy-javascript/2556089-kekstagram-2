@@ -10,9 +10,7 @@ const renderThumbnails = (data) => {
   data.forEach ((picture) => {
     const newPictureElement = pictureTemplate.cloneNode(true);
 
-    newPictureElement.addEventListener ('click', () => {
-      openFullPhoto(picture);
-    });
+    newPictureElement.addEventListener('click', () => openFullPhoto(picture));
 
     const pictureImgElement = newPictureElement.querySelector('.picture__img');
     const pictureInfoElement = newPictureElement.querySelector('.picture__info');

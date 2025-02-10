@@ -38,6 +38,7 @@ const openFullPhoto = (picture) => {
   pageBody.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   fullPhotoImg.src = picture.photo;
+  fullPhotoImg.alt = picture.description;
   fullPhotoCaption.textContent = picture.description;
   fullPhotoLikes.textContent = picture.likes;
   fullPhotoTotalComments.textContent = picture.comments.length;
