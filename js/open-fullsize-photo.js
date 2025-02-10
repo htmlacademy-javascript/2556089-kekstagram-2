@@ -10,8 +10,6 @@ const buttonCloseFullPhoto = document.querySelector('.big-picture__cancel');
 const dowloaderNewComment = document.querySelector('.comments-loader');
 const commentsCount = document.querySelector('.social__comment-count');
 const comments = fullPhoto.querySelector('.social__comments');
-//const COMMENTS_PER_PAGE = 5;
-//const displayedComments = 0;
 
 const clearOldComments = () => {
   while (comments.firstChild) {
