@@ -1,3 +1,5 @@
+import {openFullPhoto} from './open-fullsize-photo';
+
 const renderThumbnails = (data) => {
   const picturesList = document. querySelector('.pictures');
   const pictureTemplate = document.querySelector('#picture')
@@ -7,15 +9,26 @@ const renderThumbnails = (data) => {
   const picturesListFragment = document.createDocumentFragment();
   data.forEach ((picture) => {
     const newPictureElement = pictureTemplate.cloneNode(true);
+
+    newPictureElement.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openFullPhoto(picture);
+    });
+
     const pictureImgElement = newPictureElement.querySelector('.picture__img');
+    const pictureInfoElement = newPictureElement.querySelector('.picture__info');
+    const likes = pictureInfoElement.querySelector('.picture__likes');
+    const comments = pictureInfoElement.querySelector('.picture__comments');
+
     pictureImgElement.src = picture.photo;
     pictureImgElement.alt = picture.description;
-    const pictureInfoElement = newPictureElement.querySelector('.picture__info');
-    pictureInfoElement.querySelector('.picture__likes').textContent = picture.likes;
-    pictureInfoElement.querySelector('.picture__comments').textContent = picture.comments.length;
+    likes.textContent = picture.likes;
+    comments.textContent = picture.comments.length;
     picturesListFragment.append (newPictureElement);
+
   });
   picturesList.append(picturesListFragment);
 };
+
 
 export {renderThumbnails};

@@ -3,5 +3,3 @@ import { renderThumbnails } from './create-thumbnails.js';
 
 const createdArray = createPosts();
 renderThumbnails(createdArray);
-
-
