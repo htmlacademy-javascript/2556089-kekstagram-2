@@ -41,19 +41,31 @@ const pristine = new Pristine(uploadForm, {
 });
 
 
-const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+const regexp = /^[a-zа-яё0-9]{1,19}$/i;
 
 const validateHashTag = (value) => {
-  const trimmedValue = value.trim().toLowerCase();
-
-  if (trimmedValue.length === 0) {
+  if (value.length === 0){
     return true;
   }
 
-  // if (trimmedValue.length === 1 && trimmedValue[0] === '#') {
+
+  const valueArray = value.trim().split(' ');
+
+  if (valueArray.length > 5) {
+    return false;
+  }
+
+  const index = valueArray.findIndex((item)=> {
+    const v = item.trim().toLowerCase();
+    return !regexp.test(v);
+  });
+
+  return index === -1;
+
+
+  //  if (trimmedValue.length === 1 && trimmedValue[0] === '#') {
   //   return true;
   // }
-  // return regexp.test(trimmedValue);
 
 };
 
