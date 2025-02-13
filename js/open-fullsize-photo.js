@@ -8,8 +8,9 @@ const fullPhotoCaption = fullPhoto.querySelector('.social__caption');
 const fullPhotoLikes = fullPhoto.querySelector('.likes-count');
 const fullPhotoTotalComments = fullPhoto.querySelector('.social__comment-total-count');
 const buttonCloseFullPhoto = fullPhoto.querySelector('.big-picture__cancel');
-const dowloaderNewComment = fullPhoto.querySelector('.comments-loader');
-const commentsCount = fullPhoto.querySelector('.social__comment-count');
+const buttonLoadNewComments = fullPhoto.querySelector('.comments-loader');
+const commentsShownCount = fullPhoto.querySelector('.social__comment-shown-count');
+const commentsTotalCount = fullPhoto.querySelector('.social__comment-total-count');
 const comments = fullPhoto.querySelector('.social__comments');
 
 const clearOldComments = () => {
