@@ -54,7 +54,7 @@ const openFullPhoto = (picture) => {
   addDataInPhoto (picture);
   clearOldComments();
   //renderComments (picture.comments);
-  initCommentsCounter(picture.comments.length);
+  initCommentsCounter(picture.comments);
 };
 
 export {openFullPhoto};

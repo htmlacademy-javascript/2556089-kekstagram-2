@@ -5,7 +5,7 @@ const commentTemplate = document. querySelector('#comments-item')
 const fullPhoto = document.querySelector('.big-picture');
 const buttonLoadNewComments = fullPhoto.querySelector('[data-comments-loader]');
 const commentsShownCount = fullPhoto.querySelector('.social__comment-shown-count');
-const commentsTotalCount = fullPhoto.querySelector('.social__comment-total-count');
+const commentsList = fullPhoto.querySelector('.social__comments');
 
 const renderComment = (comment)=> {
   const newCommentElement = commentTemplate.cloneNode(true);
@@ -22,46 +22,66 @@ const START_STATE = 5;
 let currentState = 5;
 let commentsLimit = null;
 const STEP_COMMENTS = 5;
+let comments = [];
 
+const renderComments = () => {
 
-const showNextComments = () => {
+  commentsList.innerHTML = '';
 
-  const restComments = commentsLimit - currentState;//остаток
-  const currentStep = restComments < STEP_COMMENTS ? restComments : STEP_COMMENTS; // ШАГ
+  comments.forEach((comment, index) => {
 
-  if (currentState < commentsLimit) {
-    currentState += currentStep;
-
-    commentsShownCount.textContent = currentState.toString();
-  }
-};
-
-
-buttonLoadNewComments.addEventListener ('click',showNextComments);
-
-export const initCommentsCounter = (limit) => {
-  commentsLimit = limit;
-  currentState = START_STATE;
-
-  if (commentsLimit < START_STATE) {
-    commentsShownCount.textContent = commentsLimit.toString();
-    buttonLoadNewComments.classList.add('hidden');
-  } else {
-    commentsShownCount.textContent = START_STATE.toString();
-    buttonLoadNewComments.classList.remove('hidden');
-
-  }
-};
-
-const renderComments = (commentsData) => {
-  commentsData.forEach((comment, index) => {
     if (index < currentState) {
       const readyCommentElement = renderComment(comment);
-      comments.appendChild(readyCommentElement);
+
+      commentsList.appendChild(readyCommentElement);
     }
   });
 
 };
 
+
+const showNextComments = () => {
+
+  const restComments = commentsLimit - currentState;
+  const currentStep = restComments < STEP_COMMENTS ? restComments : STEP_COMMENTS; // ШАГ
+
+  if (currentState < commentsLimit) {
+    currentState += currentStep;
+    commentsShownCount.textContent = currentState.toString();
+
+    if (currentState === commentsLimit) {
+      buttonLoadNewComments.classList.add('hidden');
+    }
+
+    renderComments();
+  }
+};
+
+buttonLoadNewComments.addEventListener ('click',showNextComments);
+
+export const initCommentsCounter = (commentsData) => {
+  commentsLimit = commentsData.length;
+  currentState = START_STATE;
+
+  if (commentsLimit < START_STATE) {
+    commentsShownCount.textContent = commentsLimit.toString();
+    buttonLoadNewComments.classList.add('hidden');
+
+  } else {
+    commentsShownCount.textContent = START_STATE.toString();
+    buttonLoadNewComments.classList.remove('hidden');
+  }
+  comments = commentsData;
+
+  comments.forEach((comment, index) => {
+
+    if (index < START_STATE) {
+      const readyCommentElement = renderComment(comment);
+
+      commentsList.appendChild(readyCommentElement);
+    }
+  });
+
+};
 
 export {renderComment};
