@@ -8,9 +8,6 @@ const fullPhotoCaption = fullPhoto.querySelector('.social__caption');
 const fullPhotoLikes = fullPhoto.querySelector('.likes-count');
 const fullPhotoTotalComments = fullPhoto.querySelector('.social__comment-total-count');
 const buttonCloseFullPhoto = fullPhoto.querySelector('.big-picture__cancel');
-// const buttonLoadNewComments = fullPhoto.querySelector('.comments-loader');
-// const commentsShownCount = fullPhoto.querySelector('.social__comment-shown-count');
-// const commentsTotalCount = fullPhoto.querySelector('.social__comment-total-count');
 const comments = fullPhoto.querySelector('.social__comments');
 
 const clearOldComments = () => {
@@ -47,13 +44,10 @@ const registerEvents = () => {
 
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
-  //dowloaderNewComment.classList.add('hidden');
-  //commentsCount.classList.add('hidden');
   pageBody.classList.add('modal-open');
   registerEvents ();
   addDataInPhoto (picture);
   clearOldComments();
-  //renderComments (picture.comments);
   initCommentsCounter(picture.comments);
 };
 
