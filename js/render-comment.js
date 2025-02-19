@@ -63,7 +63,7 @@ export const initCommentsCounter = (commentsData) => {
   commentsLimit = commentsData.length;
   currentState = START_STATE;
 
-  if (commentsLimit < START_STATE) {
+  if (commentsLimit < START_STATE || START_STATE === commentsLimit) {
     commentsShownCount.textContent = commentsLimit.toString();
     buttonLoadNewComments.classList.add('hidden');
 
