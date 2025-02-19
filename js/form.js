@@ -6,8 +6,8 @@ const uploadFileControl = uploadForm.querySelector('#upload-file'); // Нахо�
 const photoEditorForm = uploadForm.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
 const buttonResetUploadForm = uploadForm.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
 //const buttonFormSubmit = uploadForm.querySelector('.img-upload__submit'); // Находим кнопку отправки формы
-const hashtagsInput = uploadForm.querySelector('.text__hashtags');// Находим поле для ввода хэштегов и чистим его от пробелов
-const commentInput = uploadForm.querySelector('.text__description'); // Находим поле для ввода комментария
+const hashtagsInput = uploadForm.querySelector('.text__hashtags');// поле для ввода хэштегов
+const commentInput = uploadForm.querySelector('.text__description'); // поле для ввода комментария
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 
@@ -80,7 +80,7 @@ pristine.addValidator(commentInput, (value) => {
 
   return index === -1;
 },
-'Все плохо с символами');
+'Ошибка в поле хэштега (в хештеге недопустимые символы / хештег повторяется');
 
 
 pristine.addValidator(commentInput, (value) => {
@@ -94,6 +94,7 @@ pristine.addValidator(commentInput, (value) => {
 uploadForm.addEventListener('submit',(evt) => {
   evt.preventDefault();
   console.log ('Нажата кнопка отправки формы');
+  pristine.validate();
 
 
 });
