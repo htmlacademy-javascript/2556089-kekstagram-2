@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {initCommentsCounter} from './render-comment.js';
+import {initCommentsCounter} from './comments.js';
 
 const pageBody = document.querySelector('body');
 const fullPhoto = document.querySelector('.big-picture');
@@ -17,6 +17,7 @@ const clearOldComments = () => {
 const closeFullPhoto = () => {
   fullPhoto.classList.add('hidden');
   pageBody.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onDocumentKeydown = (evt) => {

@@ -1,3 +1,11 @@
+
+const START_STATE = 5;
+const STEP_COMMENTS = 5;
+
+let currentState = 5;
+let commentsLimit = null;
+let comments = [];
+
 const commentTemplate = document. querySelector('#comments-item')
   .content
   .querySelector('.social__comment');
@@ -18,12 +26,6 @@ const renderComment = (comment)=> {
   return newCommentElement;
 };
 
-const START_STATE = 5;
-let currentState = 5;
-let commentsLimit = null;
-const STEP_COMMENTS = 5;
-let comments = [];
-
 const renderComments = () => {
 
   commentsList.innerHTML = '';
@@ -36,9 +38,7 @@ const renderComments = () => {
       commentsList.appendChild(readyCommentElement);
     }
   });
-
 };
-
 
 const showNextComments = () => {
 
@@ -72,16 +72,7 @@ export const initCommentsCounter = (commentsData) => {
     buttonLoadNewComments.classList.remove('hidden');
   }
   comments = commentsData;
-
-  comments.forEach((comment, index) => {
-
-    if (index < START_STATE) {
-      const readyCommentElement = renderComment(comment);
-
-      commentsList.appendChild(readyCommentElement);
-    }
-  });
-
+  renderComments ();
 };
 
 export {renderComment};
