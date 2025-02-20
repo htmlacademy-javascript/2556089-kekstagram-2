@@ -14,6 +14,12 @@ const MAX_QUANTITY_HASHTAGS = 5;
 
 const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUploadForm();
+  }
+};
 
 const UploadPhotoForm = () => {
   uploadFileControl.addEventListener('change', () => {
@@ -29,13 +35,6 @@ const closeUploadForm = () => {
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   uploadFileControl.value = '';
-};
-
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeUploadForm();
-  }
 };
 
 const pristine = new Pristine(uploadForm, {
