@@ -20,13 +20,14 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
     evt.preventDefault();
+    evt.stopPropagation();
     closeUploadForm();
   }
 };
+
 
 const UploadPhotoForm = () => {
   uploadFileControl.addEventListener('change', () => {
