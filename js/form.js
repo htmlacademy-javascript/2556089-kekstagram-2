@@ -28,7 +28,6 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-
 const UploadPhotoForm = () => {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
@@ -73,7 +72,6 @@ pristine.addValidator(hashtagsInput, (value) => {
 },
 'Максимальное количество Хэштегов: 5');
 
-
 pristine.addValidator(hashtagsInput, (value) => {
   const hashtagArray = value.trim().split(' ');
 
@@ -109,7 +107,6 @@ pristine.addValidator(hashtagsInput, (value) => {
   return true;
 },
 'Хэштег должен начинаться с символа "#" и состоять не менее чем из двух символов. В хэштеге недопустимые символы');
-
 
 pristine.addValidator(commentInput, (value) => {
 
