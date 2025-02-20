@@ -54,5 +54,3 @@ const openFullPhoto = (picture) => {
 };
 
 export {openFullPhoto};
-
-
