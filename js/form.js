@@ -1,7 +1,7 @@
 import {isEscapeKey} from './utils.js';
 
 const pageBody = document.querySelector('body');
-const uploadForm = document.querySelector('.img-upload__form'); // Находим форму
+const uploadForm = pageBody.querySelector('.img-upload__form'); // Находим форму
 const uploadFileControl = uploadForm.querySelector('#upload-file'); // Находим поле для загрузки файла
 const photoEditorForm = uploadForm.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
 const buttonResetUploadForm = uploadForm.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
@@ -13,6 +13,13 @@ const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
 
 const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+
+const pristine = new Pristine(uploadForm, {
+  classTo: 'img-upload__field-wrapper',
+  errorClass: 'img-upload__field-wrapper--error',
+  errorTextParent: 'img-upload__field-wrapper',
+});
+
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -34,14 +41,11 @@ const closeUploadForm = () => {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  uploadForm.reset();
+  pristine.reset();
   uploadFileControl.value = '';
-};
 
-const pristine = new Pristine(uploadForm, {
-  classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
-  errorTextParent: 'img-upload__field-wrapper',
-});
+};
 
 pristine.addValidator(hashtagsInput, (value) => {
 
@@ -79,11 +83,16 @@ pristine.addValidator(hashtagsInput, (value) => {
 'Хештеги не должны повторяться, you know ?');
 
 pristine.addValidator(hashtagsInput, (value) => {
+
+  if (value.length.trim() === 0) {
+    return true;
+  }
+
   const hashtagArray = value.trim().split(' ');
+
   for (let i = 0; i < hashtagArray.length; i++) {
     const currentHashtag = hashtagArray[i];
     const isValid = regexp.test (currentHashtag);
-
     if (!isValid) {
       return false;
     }
@@ -105,6 +114,12 @@ uploadForm.addEventListener('submit',(evt) => {
   evt.preventDefault();
   console.log ('Нажата кнопка отправки формы');
   pristine.validate();
+  // photoEditorForm.classList.add('hidden');
+  // pageBody.classList.remove('modal-open');
+  // document.removeEventListener('keydown', onDocumentKeydown);
+  // uploadForm.reset();
+  // uploadFileControl.value = '';
+
 
 });
 
