@@ -84,7 +84,7 @@ pristine.addValidator(hashtagsInput, (value) => {
 
 pristine.addValidator(hashtagsInput, (value) => {
 
-  if (value.length.trim() === 0) {
+  if (value.trim().length === 0) {
     return true;
   }
 
@@ -114,11 +114,10 @@ uploadForm.addEventListener('submit',(evt) => {
   evt.preventDefault();
   console.log ('Нажата кнопка отправки формы');
   pristine.validate();
-  // photoEditorForm.classList.add('hidden');
-  // pageBody.classList.remove('modal-open');
-  // document.removeEventListener('keydown', onDocumentKeydown);
-  // uploadForm.reset();
-  // uploadFileControl.value = '';
+
+  // if (isFormValide) {
+  //   closeUploadForm ();
+  // }
 
 
 });
