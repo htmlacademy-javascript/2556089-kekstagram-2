@@ -12,7 +12,7 @@ const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
 
-const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
+const regexp = /^#[a-zа-яё0-9]+$/i;
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -49,8 +49,15 @@ const closeUploadForm = () => {
 
 pristine.addValidator(hashtagsInput, (value) => {
 
-  const hashtag = value.length <= MAX_HASHTAG_SYMBOLS;
-  return hashtag;
+  const hashtagArray = value.trim().split(' ');
+
+  for (let i = 0; i < hashtagArray.length; i++) {
+    if (hashtagArray[i].length > MAX_HASHTAG_SYMBOLS) {
+      return false;
+    }
+  }
+  return true;
+
 },
 
 'Максимальное количество символов Хэштега: 20');
@@ -93,13 +100,14 @@ pristine.addValidator(hashtagsInput, (value) => {
   for (let i = 0; i < hashtagArray.length; i++) {
     const currentHashtag = hashtagArray[i];
     const isValid = regexp.test (currentHashtag);
+
     if (!isValid) {
       return false;
     }
   }
   return true;
 },
-'В хэштеге недопустимые символы или твой хештег состоит только из символа "#"');
+'Хэштег должен начинаться с символа "#" и состоять не менее чем из двух символов. В хэштеге недопустимые символы');
 
 
 pristine.addValidator(commentInput, (value) => {
@@ -110,16 +118,13 @@ pristine.addValidator(commentInput, (value) => {
 
 'Максимальное количество символов: 140');
 
-uploadForm.addEventListener('submit',(evt) => {
+uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  console.log ('Нажата кнопка отправки формы');
-  pristine.validate();
-
-  // if (isFormValide) {
-  //   closeUploadForm ();
-  // }
-
-
+  console.log('Нажата кнопка отправки формы');
+  const isValid = pristine.validate();
+  if (isValid) {
+    closeUploadForm();
+  }
 });
 
 buttonResetUploadForm.addEventListener('click', closeUploadForm);
