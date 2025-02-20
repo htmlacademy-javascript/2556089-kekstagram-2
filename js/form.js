@@ -10,6 +10,9 @@ const hashtagsInput = uploadForm.querySelector('.text__hashtags');// поле д
 const commentInput = uploadForm.querySelector('.text__description'); // поле для ввода комментария
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
+const MAX_QUANTITY_HASHTAGS = 5;
+
+const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
 
 
 const UploadPhotoForm = () => {
@@ -40,17 +43,6 @@ const pristine = new Pristine(uploadForm, {
   errorTextParent: 'img-upload__field-wrapper',
 });
 
-
-const regexp = /^#[a-zа-яё0-9]{1,19}$/i;
-
-
-pristine.addValidator(commentInput, (value) => {
-
-  if (value.length === 0){
-    return true;
-  }
-});
-
 pristine.addValidator(hashtagsInput, (value) => {
 
   const hashtag = value.length <= MAX_HASHTAG_SYMBOLS;
@@ -59,38 +51,46 @@ pristine.addValidator(hashtagsInput, (value) => {
 
 'Максимальное количество символов Хэштега: 20');
 
-
 pristine.addValidator(hashtagsInput, (value) => {
-  const valueArray = value.trim().split(' ');
+  const hashtagArray = value.trim().split(' ');
 
-  if (valueArray.length > 5) {
+  if (hashtagArray.length > MAX_QUANTITY_HASHTAGS) {
     return false;
   }
   return true;
 },
 'Максимальное количество Хэштегов: 5');
 
+
 pristine.addValidator(hashtagsInput, (value) => {
-  const HashtagArray = value.trim().split(' ');
-  for (let i = 0; i < HashtagArray.length; i++) {
-    const currentHashtag = HashtagArray[i];
+  const hashtagArray = value.trim().split(' ');
+
+  for (let i = 0; i < hashtagArray.length; i++) {
+    for (let j = i + 1; j < hashtagArray.length; j++) {
+      if (hashtagArray[i] === hashtagArray[j]) {
+
+        return false;
+      }
+    }
+  }
+  return true;
+},
+
+'Хештеги не должны повторяться, you know ?');
+
+pristine.addValidator(hashtagsInput, (value) => {
+  const hashtagArray = value.trim().split(' ');
+  for (let i = 0; i < hashtagArray.length; i++) {
+    const currentHashtag = hashtagArray[i];
     const isValid = regexp.test (currentHashtag);
 
     if (!isValid) {
       return false;
     }
   }
-
   return true;
-  // const index = valueArray.findIndex((item)=> {
-  //   const v = item.trim().toLowerCase();
-  //   console.log (v);
-  //   return !regexp.test(v);
-  // });
-
-  // return index === -1;
 },
-'Ошибка в поле хэштега (в хештеге недопустимые символы / хештег повторяется');
+'В хэштеге недопустимые символы или твой хештег состоит только из символа "#"');
 
 
 pristine.addValidator(commentInput, (value) => {
@@ -105,7 +105,6 @@ uploadForm.addEventListener('submit',(evt) => {
   evt.preventDefault();
   console.log ('Нажата кнопка отправки формы');
   pristine.validate();
-
 
 });
 
