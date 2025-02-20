@@ -20,7 +20,7 @@ const UploadPhotoForm = () => {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
-    uploadFileControl.value = '';
+
   });
 };
 
@@ -28,6 +28,7 @@ const closeUploadForm = () => {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
+  uploadFileControl.value = '';
 };
 
 const onDocumentKeydown = (evt) => {
