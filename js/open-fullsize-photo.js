@@ -1,5 +1,5 @@
 import {isEscapeKey} from './utils.js';
-import {initCommentsCounter, renderComment} from './render-comment.js';
+import {initCommentsCounter} from './render-comment.js';
 
 const pageBody = document.querySelector('body');
 const fullPhoto = document.querySelector('.big-picture');
@@ -11,9 +11,7 @@ const buttonCloseFullPhoto = fullPhoto.querySelector('.big-picture__cancel');
 const comments = fullPhoto.querySelector('.social__comments');
 
 const clearOldComments = () => {
-  while (comments.firstChild) {
-    comments.removeChild(comments.lastChild);
-  }
+  comments.textContent = '';
 };
 
 const closeFullPhoto = () => {
@@ -36,8 +34,8 @@ const addDataInPhoto = (pictureData) => {
   fullPhotoTotalComments.textContent = pictureData.comments.length;
 };
 
-const registerEvents = () => {
-  document.addEventListener('keydown', onDocumentKeydown, {once: true});
+const registerEventsForCloseFullPhoto = () => {
+  document.addEventListener('keydown', onDocumentKeydown);
   buttonCloseFullPhoto.addEventListener('click', closeFullPhoto, {once: true});
 };
 
@@ -45,7 +43,7 @@ const registerEvents = () => {
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
   pageBody.classList.add('modal-open');
-  registerEvents ();
+  registerEventsForCloseFullPhoto ();
   addDataInPhoto (picture);
   clearOldComments();
   initCommentsCounter(picture.comments);
