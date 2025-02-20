@@ -70,15 +70,25 @@ pristine.addValidator(hashtagsInput, (value) => {
 },
 'Максимальное количество Хэштегов: 5');
 
-pristine.addValidator(commentInput, (value) => {
-  const valueArray = value.trim().split(' ');
+pristine.addValidator(hashtagsInput, (value) => {
+  const HashtagArray = value.trim().split(' ');
+  for (let i = 0; i < HashtagArray.length; i++) {
+    const currentHashtag = HashtagArray[i];
+    const isValid = regexp.test (currentHashtag);
 
-  const index = valueArray.findIndex((item)=> {
-    const v = item.trim().toLowerCase();
-    return !regexp.test(v);
-  });
+    if (!isValid) {
+      return false;
+    }
+  }
 
-  return index === -1;
+  return true;
+  // const index = valueArray.findIndex((item)=> {
+  //   const v = item.trim().toLowerCase();
+  //   console.log (v);
+  //   return !regexp.test(v);
+  // });
+
+  // return index === -1;
 },
 'Ошибка в поле хэштега (в хештеге недопустимые символы / хештег повторяется');
 
