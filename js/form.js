@@ -73,34 +73,18 @@ pristine.addValidator(hashtagsInput, (value) => {
 'Максимальное количество Хэштегов: 5');
 
 pristine.addValidator(hashtagsInput, (value) => {
-  const hashtagArray = value.trim().toLowerCase().split(' ');
-
   const hashtagSet = new Set();
+  const hashtags = value.trim().toLowerCase().split(' ');
 
-  for (let i = 0; i < hashtagArray.length; i++) {
-
-    if (hashtagSet.has(hashtagArray[i])) {
+  for (const hashtag of hashtags) {
+    if (hashtagSet.has(hashtag)) {
       return false;
     } else {
-      hashtagSet.add(hashtagArray[i]);
-
+      hashtagSet.add(hashtag);
     }
   }
-  //   const hashtagArray = value.trim().toLowerCase().split(' ');
-
-  //   for (let i = 0; i < hashtagArray.length; i++) {
-  //     for (let j = i + 1; j < hashtagArray.length; j++) {
-  //       if (hashtagArray[i] === hashtagArray[j]) {
-
-  //         return false;
-  //       }
-  //     }
-  //   }
-  //   return true;
-  // },
   return true;
 },
-
 'Хештеги не должны повторяться, are you nuts?');
 
 pristine.addValidator(hashtagsInput, (value) => {
