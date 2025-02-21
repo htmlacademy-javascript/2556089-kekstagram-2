@@ -1,5 +1,9 @@
 import {isEscapeKey} from './utils.js';
 
+const MAX_HASHTAG_SYMBOLS = 20;
+const MAX_COMMENT_SYMBOLS = 140;
+const MAX_QUANTITY_HASHTAGS = 5;
+
 const pageBody = document.querySelector('body');
 const uploadForm = pageBody.querySelector('.img-upload__form'); // Находим форму
 const uploadFileControl = uploadForm.querySelector('#upload-file'); // Находим поле для загрузки файла
@@ -8,9 +12,6 @@ const buttonResetUploadForm = uploadForm.querySelector('.img-upload__cancel'); /
 //const buttonFormSubmit = uploadForm.querySelector('.img-upload__submit'); // Находим кнопку отправки формы
 const hashtagsInput = uploadForm.querySelector('.text__hashtags');// поле для ввода хэштегов
 const commentInput = uploadForm.querySelector('.text__description'); // поле для ввода комментария
-const MAX_HASHTAG_SYMBOLS = 20;
-const MAX_COMMENT_SYMBOLS = 140;
-const MAX_QUANTITY_HASHTAGS = 5;
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -73,20 +74,35 @@ pristine.addValidator(hashtagsInput, (value) => {
 'Максимальное количество Хэштегов: 5');
 
 pristine.addValidator(hashtagsInput, (value) => {
-  const hashtagArray = value.trim().split(' ');
+  const hashtagArray = value.trim().toLowerCase().split(' ');
+
+  const hashtagSet = new Set();
 
   for (let i = 0; i < hashtagArray.length; i++) {
-    for (let j = i + 1; j < hashtagArray.length; j++) {
-      if (hashtagArray[i] === hashtagArray[j]) {
 
-        return false;
-      }
+    if (hashtagSet.has(hashtagArray[i])) {
+      return false;
+    } else {
+      hashtagSet.add(hashtagArray[i]);
+
     }
   }
+  //   const hashtagArray = value.trim().toLowerCase().split(' ');
+
+  //   for (let i = 0; i < hashtagArray.length; i++) {
+  //     for (let j = i + 1; j < hashtagArray.length; j++) {
+  //       if (hashtagArray[i] === hashtagArray[j]) {
+
+  //         return false;
+  //       }
+  //     }
+  //   }
+  //   return true;
+  // },
   return true;
 },
 
-'Хештеги не должны повторяться, you know ?');
+'Хештеги не должны повторяться, are you nuts?');
 
 pristine.addValidator(hashtagsInput, (value) => {
 
@@ -106,7 +122,7 @@ pristine.addValidator(hashtagsInput, (value) => {
   }
   return true;
 },
-'Хэштег должен начинаться с символа "#" и состоять не менее чем из двух символов. В хэштеге недопустимые символы');
+'Хэштег должен начинаться с символа "#" и состоять не менее чем из двух символов. В хэштеге недопустимы любые спецсимволы');
 
 pristine.addValidator(commentInput, (value) => {
 
@@ -118,7 +134,6 @@ pristine.addValidator(commentInput, (value) => {
 
 uploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  console.log('Нажата кнопка отправки формы');
   const isValid = pristine.validate();
   if (isValid) {
     closeUploadForm();
