@@ -5,17 +5,16 @@ const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
 
 const pageBody = document.querySelector('body');
-const uploadForm = pageBody.querySelector('.img-upload__form'); // Находим форму
-const uploadFileControl = uploadForm.querySelector('#upload-file'); // Находим поле для загрузки файла
-const photoEditorForm = uploadForm.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
-const buttonResetUploadForm = uploadForm.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
-//const buttonFormSubmit = uploadForm.querySelector('.img-upload__submit'); // Находим кнопку отправки формы
-const hashtagsInput = uploadForm.querySelector('.text__hashtags');// поле для ввода хэштегов
-const commentInput = uploadForm.querySelector('.text__description'); // поле для ввода комментария
+const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
+const uploadFileControl = uploadFormPhoto.querySelector('#upload-file'); // Находим поле для загрузки файла
+const photoEditorForm = uploadFormPhoto.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
+const buttonResetUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
+const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// поле для ввода хэштегов
+const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
-const pristine = new Pristine(uploadForm, {
+const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
@@ -25,11 +24,11 @@ const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
     evt.preventDefault();
     evt.stopPropagation();
-    closeUploadForm();
+    closeUploadFormPhoto();
   }
 };
 
-const UploadPhotoForm = () => {
+const openUploadFormPhoto = () => {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
@@ -38,11 +37,11 @@ const UploadPhotoForm = () => {
   });
 };
 
-const closeUploadForm = () => {
+const closeUploadFormPhoto = () => {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadForm.reset();
+  uploadFormPhoto.reset();
   pristine.reset();
   uploadFileControl.value = '';
 
@@ -132,14 +131,14 @@ pristine.addValidator(commentInput, (value) => {
 
 'Максимальное количество символов: 140');
 
-uploadForm.addEventListener('submit', (evt) => {
+uploadFormPhoto.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    closeUploadForm();
+    closeUploadFormPhoto();
   }
 });
 
-buttonResetUploadForm.addEventListener('click', closeUploadForm);
+buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
 
-export {UploadPhotoForm};
+export {openUploadFormPhoto};
