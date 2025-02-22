@@ -28,16 +28,16 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const openUploadFormPhoto = () => {
+function openUploadFormPhoto () {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
 
   });
-};
+}
 
-const closeUploadFormPhoto = () => {
+function closeUploadFormPhoto () {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -45,7 +45,7 @@ const closeUploadFormPhoto = () => {
   pristine.reset();
   uploadFileControl.value = '';
 
-};
+}
 
 pristine.addValidator(hashtagsInput, (value) => {
 
