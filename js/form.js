@@ -72,18 +72,19 @@ pristine.addValidator(hashtagsInput, (value) => {
 },
 'Максимальное количество Хэштегов: 5');
 
-pristine.addValidator(hashtagsInput, (value) => {
-  const hashtagSet = new Set();
-  const hashtags = value.trim().toLowerCase().split(' ');
+// рассмотри два момента:
+// - как можно ещё создать Set? Может найдутся способы поудобнее, чем класть туда элементы по одному
+// - есть массив [1, 2, 3, 4, 1, 2]. Сделай для него Set, выведи в консоль и подумай, как можно отличить Set и исходный массив не сравнивая по элементно. Для наглядности можешь ещё сделать Set из массива [1, 2, 3, 4] и посмотреть, чем уже этот Set от исходника отличается.
 
-  for (const hashtag of hashtags) {
-    if (hashtagSet.has(hashtag)) {
-      return false;
-    } else {
-      hashtagSet.add(hashtag);
-    }
+pristine.addValidator(hashtagsInput, (value) => {
+
+  const hashtagArray = value.trim().toLowerCase().split(' ');
+  const hashtagSet = new Set(hashtagArray);
+  if (hashtagSet.size !== hashtagArray.length) {
+    return false;
   }
   return true;
+
 },
 'Хештеги не должны повторяться, are you nuts?');
 
