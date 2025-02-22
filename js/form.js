@@ -3,6 +3,9 @@ import {isEscapeKey} from './utils.js';
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
+const STEP_SCALE_PHOTO = 25;
+const MIN_SCALE_VALUE_PHOTO = 25;
+const MAX_SCALE_VALUE_PHOTO = 100;
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
@@ -11,10 +14,15 @@ const photoEditorForm = uploadFormPhoto.querySelector ('.img-upload__overlay'); 
 const buttonResetUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
 const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// поле для ввода хэштегов
 const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
+
 const buttonScaleControlSmaller = uploadFormPhoto.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control--bigger');
 const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
 
+const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview');
+
+
+// transform: scale(0.75).
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -126,12 +134,25 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 
 buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
 
+
 buttonScaleControlSmaller.addEventListener ('click', () => {
-  console.log ('Ghbdt');
+
+  scaleValueInput.value = parseFloat(scaleValueInput.value);
+  const newScaleValueInput = scaleValueInput.value -= STEP_SCALE_PHOTO;
+  scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
+  scaleValueInput.value = `${newScaleValueInput }%`;
+  const scaleValue = newScaleValueInput / 100;
+  uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+
 });
 
 buttonScaleControlBigger.addEventListener ('click', () => {
-  console.log ('Щабат');
+  let currentScaleValueInput = parseFloat(scaleValueInput.value);
+  const newScaleValueInput = currentScaleValueInput += STEP_SCALE_PHOTO;
+  scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
+  scaleValueInput.value = `${newScaleValueInput }%`;
+  const scaleValue = newScaleValueInput / 100;
+  uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
 });
 
 
