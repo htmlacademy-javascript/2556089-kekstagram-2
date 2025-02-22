@@ -11,6 +11,10 @@ const photoEditorForm = uploadFormPhoto.querySelector ('.img-upload__overlay'); 
 const buttonResetUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
 const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// поле для ввода хэштегов
 const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
+const buttonScaleControlSmaller = uploadFormPhoto.querySelector('.scale__control--smaller');
+const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control--bigger');
+const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
+
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -72,10 +76,6 @@ pristine.addValidator(hashtagsInput, (value) => {
 },
 'Максимальное количество Хэштегов: 5');
 
-// рассмотри два момента:
-// - как можно ещё создать Set? Может найдутся способы поудобнее, чем класть туда элементы по одному
-// - есть массив [1, 2, 3, 4, 1, 2]. Сделай для него Set, выведи в консоль и подумай, как можно отличить Set и исходный массив не сравнивая по элементно. Для наглядности можешь ещё сделать Set из массива [1, 2, 3, 4] и посмотреть, чем уже этот Set от исходника отличается.
-
 pristine.addValidator(hashtagsInput, (value) => {
 
   const hashtagArray = value.trim().toLowerCase().split(' ');
@@ -84,8 +84,8 @@ pristine.addValidator(hashtagsInput, (value) => {
     return false;
   }
   return true;
-
 },
+
 'Хештеги не должны повторяться, are you nuts?');
 
 pristine.addValidator(hashtagsInput, (value) => {
@@ -125,5 +125,14 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 });
 
 buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
+
+buttonScaleControlSmaller.addEventListener ('click', () => {
+  console.log ('Ghbdt');
+});
+
+buttonScaleControlBigger.addEventListener ('click', () => {
+  console.log ('Щабат');
+});
+
 
 export {openUploadFormPhoto};
