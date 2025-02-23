@@ -150,8 +150,13 @@ buttonScaleControlSmaller.addEventListener ('click', () => {
     const scaleValue = newScaleValueInput / 100;
     uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
 
+    if (newScaleValueInput === MIN_SCALE_VALUE_PHOTO) {
+      buttonScaleControlSmaller.classList.add('hidden');
+    }
+    if (newScaleValueInput < MAX_SCALE_VALUE_PHOTO) {
+      buttonScaleControlBigger.classList.remove('hidden');
+    }
   }
-
 });
 
 buttonScaleControlBigger.addEventListener ('click', () => {
@@ -164,9 +169,15 @@ buttonScaleControlBigger.addEventListener ('click', () => {
     scaleValueInput.value = `${newScaleValueInput }%`;
     const scaleValue = newScaleValueInput / 100;
     uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+
+    if (newScaleValueInput > MIN_SCALE_VALUE_PHOTO) {
+      buttonScaleControlSmaller.classList.remove('hidden');
+      if (newScaleValueInput === MAX_SCALE_VALUE_PHOTO) {
+        buttonScaleControlBigger.classList.add('hidden');
+      }
+    }
   }
 
 });
-
 
 export {openUploadFormPhoto};
