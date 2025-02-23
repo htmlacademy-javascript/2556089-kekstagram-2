@@ -19,8 +19,9 @@ const commentInput = uploadFormPhoto.querySelector('.text__description'); // п�
 const buttonScaleControlSmaller = uploadFormPhoto.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control--bigger');
 const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
-
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview');
+
+const changeEffectRange = uploadFormPhoto.querySelector('.effect-level__value');
 
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
