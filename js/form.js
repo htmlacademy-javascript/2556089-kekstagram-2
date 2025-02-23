@@ -3,6 +3,7 @@ import {isEscapeKey} from './utils.js';
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
+// const DEFAULT_SCALE_PHOTO = 100;
 const STEP_SCALE_PHOTO = 25;
 const MIN_SCALE_VALUE_PHOTO = 25;
 const MAX_SCALE_VALUE_PHOTO = 100;
@@ -22,8 +23,6 @@ const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview');
 
 
-// transform: scale(0.75).
-
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
 const pristine = new Pristine(uploadFormPhoto, {
@@ -37,6 +36,7 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     evt.stopPropagation();
     closeUploadFormPhoto();
+
   }
 };
 
@@ -56,6 +56,10 @@ function closeUploadFormPhoto () {
   uploadFormPhoto.reset();
   pristine.reset();
   uploadFileControl.value = '';
+  console.log('Сброс масштаба к исходному размеру');
+
+  uploadPhotoPreview.style.transform = 'scale(1)';
+
 
 }
 
@@ -134,25 +138,34 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 
 buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
 
-
 buttonScaleControlSmaller.addEventListener ('click', () => {
 
-  scaleValueInput.value = parseFloat(scaleValueInput.value);
-  const newScaleValueInput = scaleValueInput.value -= STEP_SCALE_PHOTO;
-  scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
-  scaleValueInput.value = `${newScaleValueInput }%`;
-  const scaleValue = newScaleValueInput / 100;
-  uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+  const currentValueInput = parseFloat(scaleValueInput.value.slice(0, -1));
+
+  if (currentValueInput > MIN_SCALE_VALUE_PHOTO) {
+
+    const newScaleValueInput = currentValueInput - STEP_SCALE_PHOTO;
+    scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
+    scaleValueInput.value = `${newScaleValueInput }%`;
+    const scaleValue = newScaleValueInput / 100;
+    uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+
+  }
 
 });
 
 buttonScaleControlBigger.addEventListener ('click', () => {
-  let currentScaleValueInput = parseFloat(scaleValueInput.value);
-  const newScaleValueInput = currentScaleValueInput += STEP_SCALE_PHOTO;
-  scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
-  scaleValueInput.value = `${newScaleValueInput }%`;
-  const scaleValue = newScaleValueInput / 100;
-  uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+  const currentValueInput = parseFloat(scaleValueInput.value.slice(0, -1));
+
+  if (currentValueInput < MAX_SCALE_VALUE_PHOTO) {
+
+    const newScaleValueInput = currentValueInput + STEP_SCALE_PHOTO;
+    scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
+    scaleValueInput.value = `${newScaleValueInput }%`;
+    const scaleValue = newScaleValueInput / 100;
+    uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
+  }
+
 });
 
 
