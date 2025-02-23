@@ -3,7 +3,7 @@ import {isEscapeKey} from './utils.js';
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
-// const DEFAULT_SCALE_PHOTO = 100;
+const DEFAULT_SCALE_PHOTO = 100;
 const STEP_SCALE_PHOTO = 25;
 const MIN_SCALE_VALUE_PHOTO = 25;
 const MAX_SCALE_VALUE_PHOTO = 100;
@@ -31,12 +31,17 @@ const pristine = new Pristine(uploadFormPhoto, {
   errorTextParent: 'img-upload__field-wrapper',
 });
 
+const resetScalePhoto = () => {
+  uploadPhotoPreview.style.transform = 'scale(1)';
+  scaleValueInput.setAttribute('value', `${DEFAULT_SCALE_PHOTO }%`);
+};
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
     evt.preventDefault();
     evt.stopPropagation();
     closeUploadFormPhoto();
-
+    resetScalePhoto();
   }
 };
 
@@ -45,7 +50,6 @@ function openUploadFormPhoto () {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
-
   });
 }
 
@@ -56,9 +60,7 @@ function closeUploadFormPhoto () {
   uploadFormPhoto.reset();
   pristine.reset();
   uploadFileControl.value = '';
-  console.log('Сброс масштаба к исходному размеру');
-
-  uploadPhotoPreview.style.transform = 'scale(1)';
+  resetScalePhoto();
 
 
 }
