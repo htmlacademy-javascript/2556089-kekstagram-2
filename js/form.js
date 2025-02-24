@@ -7,6 +7,7 @@ const DEFAULT_SCALE_PHOTO = 100;
 const STEP_SCALE_PHOTO = 25;
 const MIN_SCALE_VALUE_PHOTO = 25;
 const MAX_SCALE_VALUE_PHOTO = 100;
+const regexp = /^#[a-zа-яё0-9]+$/i;
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
@@ -157,7 +158,6 @@ effectsList.addEventListener ('change', () => {
   }
 });
 
-const regexp = /^#[a-zа-яё0-9]+$/i;
 
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
@@ -176,10 +176,11 @@ const onDocumentKeydown = (evt) => {
     evt.stopPropagation();
     closeUploadFormPhoto();
     resetScalePhoto();
-    uploadPhotoPreview.reset();
+    // uploadPhotoPreview.reset();
     uploadFormPhoto.reset();
     uploadPhotoPreview.style.filter = '';
     changeEffectInput.value = '';
+
   }
 };
 
@@ -198,7 +199,7 @@ function closeUploadFormPhoto () {
   pristine.reset();
   uploadFileControl.value = '';
   resetScalePhoto();
-  uploadPhotoPreview.reset();
+  // uploadPhotoPreview.reset();
   uploadFormPhoto.reset();
   uploadPhotoPreview.style.filter = '';
   changeEffectInput.value = '';
