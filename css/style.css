@@ -435,6 +435,10 @@ main {
   border: 0;
 }
 
+.scale__control[disabled] {
+pointer-events: none;
+}
+
 .scale__control:hover,
 .scale__control:focus {
   background-color: rgba(0, 0, 0, 0.3);

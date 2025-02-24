@@ -19,10 +19,22 @@ const commentInput = uploadFormPhoto.querySelector('.text__description'); // п�
 const buttonScaleControlSmaller = uploadFormPhoto.querySelector('.scale__control--smaller');
 const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control--bigger');
 const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
-const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview');
+const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview img');
 
-const changeEffectRange = uploadFormPhoto.querySelector('.effect-level__value');
+const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');
+const sliderElement = uploadFormPhoto.querySelector('.effect-level__slider');
+const radioInput = uploadFormPhoto.querySelector('.effects__radio');
 
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 100,
+  },
+  start: 80,
+  step: 10,
+  connect: 'lower',
+
+});
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -132,6 +144,7 @@ pristine.addValidator(commentInput, (value) => {
 'Максимальное количество символов: 140');
 
 uploadFormPhoto.addEventListener('submit', (evt) => {
+  console.log(evt);
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
@@ -154,10 +167,10 @@ buttonScaleControlSmaller.addEventListener ('click', () => {
     uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
 
     if (newScaleValueInput === MIN_SCALE_VALUE_PHOTO) {
-      buttonScaleControlSmaller.classList.add('hidden');
+      buttonScaleControlSmaller.setAttribute('disabled', '');
     }
     if (newScaleValueInput < MAX_SCALE_VALUE_PHOTO) {
-      buttonScaleControlBigger.classList.remove('hidden');
+      buttonScaleControlBigger.removeAttribute ('disabled');
     }
   }
 });
@@ -174,9 +187,9 @@ buttonScaleControlBigger.addEventListener ('click', () => {
     uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
 
     if (newScaleValueInput > MIN_SCALE_VALUE_PHOTO) {
-      buttonScaleControlSmaller.classList.remove('hidden');
+      buttonScaleControlSmaller.removeAttribute('disabled');
       if (newScaleValueInput === MAX_SCALE_VALUE_PHOTO) {
-        buttonScaleControlBigger.classList.add('hidden');
+        buttonScaleControlBigger.setAttribute('disabled', '');
       }
     }
   }
