@@ -21,20 +21,84 @@ const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control-
 const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview img');
 
-const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');
-const sliderElement = uploadFormPhoto.querySelector('.effect-level__slider');
-const radioInput = uploadFormPhoto.querySelector('.effects__radio');
+const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
+const sliderElement = uploadFormPhoto.querySelector('.effect-level__slider');// слайдер
+const sliderElementContainer = uploadFormPhoto.querySelector('.img-upload__effect-level');// контейнер слайдера
+const effectsList = uploadFormPhoto.querySelector('.effects__list'); // список эффектов
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 80,
-  step: 10,
-  connect: 'lower',
+
+const radioButtonNoneEffects = uploadFormPhoto.querySelector('#effect-none');
+const radioButtonEffecСhrom = uploadFormPhoto.querySelector('#effect-chrome');
+
+const radioButtoEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
+const radioButtonEffectMarvin = uploadFormPhoto.querySelector('#effect-marvin');
+const radioButtonEffectPhobos = uploadFormPhoto.querySelector('#effect-phobos');
+const radioButtonEffectHeat = uploadFormPhoto.querySelector('#effect-heat');
+
+
+const showSliderElement = () => {
+  sliderElement.classList.remove('hidden');
+  sliderElementContainer.classList.remove('hidden');
+  uploadPhotoPreview.style.filter = '';
+};
+
+
+effectsList.addEventListener ('change', () => {
+
+  if (radioButtonNoneEffects.checked) {
+    uploadPhotoPreview.style.filter = '';
+    sliderElement.classList.add('hidden');
+    sliderElementContainer.classList.add('hidden');
+  }
+
+  if (radioButtonEffecСhrom.checked) {
+    console.log ('Выбран chrome');
+    showSliderElement();
+
+    noUiSlider.create(sliderElement, {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 0,
+      step: 0.1,
+      connect: 'lower',
+    });
+
+    sliderElement.noUiSlider.on('update', (value) => {
+      const currentEffectValue = sliderElement.noUiSlider.get (value);
+      uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
+    });
+  }
+
+  if (radioButtonNoneEffects.checked) {
+    uploadPhotoPreview.style.filter = '';
+    sliderElement.classList.add('hidden');
+    sliderElementContainer.classList.add('hidden');
+  }
+
+  if (radioButtoEffectSepia.checked) {
+    console.log ('Выбран Sepia');
+    showSliderElement();
+
+    noUiSlider.create(sliderElement, {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 0,
+      step: 0.1,
+      connect: 'lower',
+    });
+
+    sliderElement.noUiSlider.on('update', (value) => {
+      const currentEffectValue = sliderElement.noUiSlider.get (value);
+      uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
+    });
+  }
 
 });
+
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -74,8 +138,6 @@ function closeUploadFormPhoto () {
   pristine.reset();
   uploadFileControl.value = '';
   resetScalePhoto();
-
-
 }
 
 pristine.addValidator(hashtagsInput, (value) => {
