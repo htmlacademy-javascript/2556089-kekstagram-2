@@ -30,7 +30,7 @@ const effectsList = uploadFormPhoto.querySelector('.effects__list'); // спис
 const radioButtonNoneEffects = uploadFormPhoto.querySelector('#effect-none');
 const radioButtonEffecСhrom = uploadFormPhoto.querySelector('#effect-chrome');
 
-const radioButtoEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
+const radioButtonEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
 const radioButtonEffectMarvin = uploadFormPhoto.querySelector('#effect-marvin');
 const radioButtonEffectPhobos = uploadFormPhoto.querySelector('#effect-phobos');
 const radioButtonEffectHeat = uploadFormPhoto.querySelector('#effect-heat');
@@ -42,6 +42,16 @@ const showSliderElement = () => {
   uploadPhotoPreview.style.filter = '';
 };
 
+noUiSlider.create(sliderElement, {
+  range: {
+    min: 0,
+    max: 0,
+  },
+  start: 0,
+  step: 0,
+  connect: 'lower',
+});
+
 
 effectsList.addEventListener ('change', () => {
 
@@ -52,53 +62,100 @@ effectsList.addEventListener ('change', () => {
   }
 
   if (radioButtonEffecСhrom.checked) {
-    console.log ('Выбран chrome');
-    showSliderElement();
 
-    noUiSlider.create(sliderElement, {
+    showSliderElement();
+    sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
         max: 1,
       },
       start: 0,
       step: 0.1,
-      connect: 'lower',
     });
 
-    sliderElement.noUiSlider.on('update', (value) => {
-      const currentEffectValue = sliderElement.noUiSlider.get (value);
+    sliderElement.noUiSlider.on('update', () => {
+      const currentEffectValue = sliderElement.noUiSlider.get ();
       uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
+      changeEffectInput.setAttribute('value', currentEffectValue);
     });
   }
 
-  if (radioButtonNoneEffects.checked) {
-    uploadPhotoPreview.style.filter = '';
-    sliderElement.classList.add('hidden');
-    sliderElementContainer.classList.add('hidden');
-  }
+  if (radioButtonEffectSepia.checked) {
 
-  if (radioButtoEffectSepia.checked) {
-    console.log ('Выбран Sepia');
     showSliderElement();
-
-    noUiSlider.create(sliderElement, {
+    sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
         max: 1,
       },
       start: 0,
       step: 0.1,
-      connect: 'lower',
+    });
+
+    sliderElement.noUiSlider.on('update', () => {
+      const currentEffectValue = sliderElement.noUiSlider.get ();
+      uploadPhotoPreview.style.filter = `sepia(${currentEffectValue})`;
+      changeEffectInput.setAttribute('value', currentEffectValue);
+    });
+  }
+
+  if (radioButtonEffectMarvin.checked) {
+
+    showSliderElement();
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 0,
+      step: 1,
     });
 
     sliderElement.noUiSlider.on('update', (value) => {
       const currentEffectValue = sliderElement.noUiSlider.get (value);
-      uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
+      uploadPhotoPreview.style.filter = `invert(${currentEffectValue}%)`;
+      changeEffectInput.setAttribute('value', currentEffectValue);
     });
   }
 
+  if (radioButtonEffectPhobos.checked) {
+
+    showSliderElement();
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 0,
+      step: 0.1,
+    });
+
+    sliderElement.noUiSlider.on('update', () => {
+      const currentEffectValue = sliderElement.noUiSlider.get ();
+      uploadPhotoPreview.style.filter = `blur(${currentEffectValue}px)`;
+      changeEffectInput.setAttribute('value', currentEffectValue);
+    });
+  }
+
+  if (radioButtonEffectHeat.checked) {
+
+    showSliderElement();
+    sliderElement.noUiSlider.updateOptions({
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 1,
+      step: 0.1,
+    });
+
+    sliderElement.noUiSlider.on('update', () => {
+      const currentEffectValue = sliderElement.noUiSlider.get ();
+      uploadPhotoPreview.style.filter = `brightness(${currentEffectValue})`;
+      changeEffectInput.setAttribute('value', currentEffectValue);
+    });
+  }
 });
-
 
 const regexp = /^#[a-zа-яё0-9]+$/i;
 
@@ -119,6 +176,10 @@ const onDocumentKeydown = (evt) => {
     evt.stopPropagation();
     closeUploadFormPhoto();
     resetScalePhoto();
+    uploadPhotoPreview.reset();
+    uploadFormPhoto.reset();
+    uploadPhotoPreview.style.filter = '';
+    changeEffectInput.value = '';
   }
 };
 
@@ -134,10 +195,13 @@ function closeUploadFormPhoto () {
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
-  uploadFormPhoto.reset();
   pristine.reset();
   uploadFileControl.value = '';
   resetScalePhoto();
+  uploadPhotoPreview.reset();
+  uploadFormPhoto.reset();
+  uploadPhotoPreview.style.filter = '';
+  changeEffectInput.value = '';
 }
 
 pristine.addValidator(hashtagsInput, (value) => {
