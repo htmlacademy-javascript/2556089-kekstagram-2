@@ -53,13 +53,16 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
+export const applyOriginalEffect = () => {
+  uploadPhotoPreview.style.filter = '';
+  sliderElement.classList.add('hidden');
+  sliderElementContainer.classList.add('hidden');
+};
 
 effectsList.addEventListener ('change', () => {
 
   if (radioButtonNoneEffects.checked) {
-    uploadPhotoPreview.style.filter = '';
-    sliderElement.classList.add('hidden');
-    sliderElementContainer.classList.add('hidden');
+    applyOriginalEffect();
   }
 
   if (radioButtonEffecСhrom.checked) {
@@ -70,7 +73,7 @@ effectsList.addEventListener ('change', () => {
         min: 0,
         max: 1,
       },
-      start: 0,
+      start: 1,
       step: 0.1,
     });
 
@@ -89,7 +92,7 @@ effectsList.addEventListener ('change', () => {
         min: 0,
         max: 1,
       },
-      start: 0,
+      start: 1,
       step: 0.1,
     });
 
@@ -108,7 +111,7 @@ effectsList.addEventListener ('change', () => {
         min: 0,
         max: 100,
       },
-      start: 0,
+      start: 100,
       step: 1,
     });
 
@@ -127,7 +130,7 @@ effectsList.addEventListener ('change', () => {
         min: 0,
         max: 3,
       },
-      start: 0,
+      start: 3,
       step: 0.1,
     });
 
@@ -146,7 +149,7 @@ effectsList.addEventListener ('change', () => {
         min: 1,
         max: 3,
       },
-      start: 1,
+      start: 3,
       step: 0.1,
     });
 
@@ -157,7 +160,6 @@ effectsList.addEventListener ('change', () => {
     });
   }
 });
-
 
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
@@ -176,7 +178,6 @@ const onDocumentKeydown = (evt) => {
     evt.stopPropagation();
     closeUploadFormPhoto();
     resetScalePhoto();
-    // uploadPhotoPreview.reset();
     uploadFormPhoto.reset();
     uploadPhotoPreview.style.filter = '';
     changeEffectInput.value = '';
@@ -189,6 +190,7 @@ function openUploadFormPhoto () {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
+    applyOriginalEffect();
   });
 }
 
@@ -199,7 +201,6 @@ function closeUploadFormPhoto () {
   pristine.reset();
   uploadFileControl.value = '';
   resetScalePhoto();
-  // uploadPhotoPreview.reset();
   uploadFormPhoto.reset();
   uploadPhotoPreview.style.filter = '';
   changeEffectInput.value = '';
@@ -271,7 +272,6 @@ pristine.addValidator(commentInput, (value) => {
 'Максимальное количество символов: 140');
 
 uploadFormPhoto.addEventListener('submit', (evt) => {
-  console.log(evt);
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
