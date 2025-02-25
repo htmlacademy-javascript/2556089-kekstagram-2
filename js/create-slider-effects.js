@@ -7,7 +7,7 @@ const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview i
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
 
 const radioButtonNoneEffects = uploadFormPhoto.querySelector('#effect-none');
-const radioButtonEffecСhrom = uploadFormPhoto.querySelector('#effect-chrome');
+const radioButtonEffectСhrom = uploadFormPhoto.querySelector('#effect-chrome');
 
 const radioButtonEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
 const radioButtonEffectMarvin = uploadFormPhoto.querySelector('#effect-marvin');
@@ -44,7 +44,7 @@ const createSliderEffects = () => {
       applyOriginalEffect();
     }
 
-    if (radioButtonEffecСhrom.checked) {
+    if (radioButtonEffectСhrom.checked) {
 
       showSliderElement();
       sliderElement.noUiSlider.updateOptions({

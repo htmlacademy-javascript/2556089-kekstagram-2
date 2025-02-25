@@ -20,12 +20,12 @@ const closeFullPhoto = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeFullPhoto();
   }
-};
+}
 
 const addDataInPhoto = (pictureData) => {
   fullPhotoImg.src = pictureData.photo;
