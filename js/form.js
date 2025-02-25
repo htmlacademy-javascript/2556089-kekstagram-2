@@ -1,6 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {createSliderEffects, applyOriginalEffect} from './create-slyder-effects.js';
-export {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp} from './const.js';
+import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp} from './const.js';
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
