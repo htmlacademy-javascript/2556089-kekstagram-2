@@ -2,8 +2,23 @@ import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT} from './const.js';
 let errorMessage;
 
+const showAlertMessage = () => {
+  const pictureTemplate = document.querySelector('#error')
+    .content
+    .querySelector('.error');
+
+  errorMessage = pictureTemplate.cloneNode(true);
+
+  document.body.appendChild(errorMessage);
+
+  setTimeout(() => {
+    errorMessage.remove();
+  }, MAX_TIME_ALERT);
+
+};
+
 const loadDataFromServer = () => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram/dat')
     .then((response) => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
@@ -14,18 +29,7 @@ const loadDataFromServer = () => {
       renderThumbnails(data);
     })
     .catch((error) => {
-      const pictureTemplate = document.querySelector('#error')
-        .content
-        .querySelector('.error');
-
-      errorMessage = pictureTemplate.cloneNode(true);
-
-      document.body.appendChild(errorMessage);
-
-
-      setTimeout(() => {
-        errorMessage.remove();
-      }, MAX_TIME_ALERT);
+      showAlertMessage ();
     });
 };
 
