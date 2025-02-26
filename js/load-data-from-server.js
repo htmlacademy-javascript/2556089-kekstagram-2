@@ -1,13 +1,24 @@
 // const pageBody = document.querySelector('body');
 // const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
 
-fetch ('https://31.javascript.htmlacademy.pro/kekstagram/data')
+const doLoadData = (onSuccess, onError) => fetch ('https://31.javascript.htmlacademy.pro/kekstagram/data')
+  .then((response) => {
+    if(response.ok) {
+      return response.json ();
+    }
 
-  .then((response) => response.json ())
+    throw new Error (`${response.status} ${response.statusText}`);
+  })
+
   .then((data) => {
-    console.log (data);
+    onSuccess (data);
+  })
 
+  .catch ((err) => {
+    onError(err);
   });
+
+export {doLoadData};
 
 
 // fetch ('https://31.javascript.htmlacademy.pro/kekstagram',
@@ -24,4 +35,3 @@ fetch ('https://31.javascript.htmlacademy.pro/kekstagram/data')
 //   });
 
 
-// export {dowloadDataFromServer};

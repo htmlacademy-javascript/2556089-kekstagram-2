@@ -20,7 +20,7 @@ const renderThumbnails = (data) => {
     const likes = pictureInfoElement.querySelector('.picture__likes');
     const comments = pictureInfoElement.querySelector('.picture__comments');
 
-    pictureImgElement.src = picture.photo;
+    pictureImgElement.src = picture.url;
     pictureImgElement.alt = picture.description;
     likes.textContent = picture.likes;
     comments.textContent = picture.comments.length;

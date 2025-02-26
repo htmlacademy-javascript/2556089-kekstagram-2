@@ -28,7 +28,7 @@ function onDocumentKeydown (evt) {
 }
 
 const addDataInPhoto = (pictureData) => {
-  fullPhotoImg.src = pictureData.photo;
+  fullPhotoImg.src = pictureData.url;
   fullPhotoImg.alt = pictureData.description;
   fullPhotoCaption.textContent = pictureData.description;
   fullPhotoLikes.textContent = pictureData.likes;
