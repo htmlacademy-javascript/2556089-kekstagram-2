@@ -8,6 +8,7 @@ const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Нахо
 const uploadFileControl = uploadFormPhoto.querySelector('#upload-file'); // Находим поле для загрузки файла
 const photoEditorForm = uploadFormPhoto.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
 const buttonResetUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
+const buttonSendUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__submit');
 const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// поле для ввода хэштегов
 const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
 
@@ -127,16 +128,34 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
 
+    buttonSendUploadFormPhoto.setAttribute('disabled', 'true');
+
     const formData = new FormData (evt.target);
 
     fetch ('https://31.javascript.htmlacademy.pro/kekstagram',
       {
         method: 'POST',
         body: formData,
-      },
-    );
+      })
 
-    closeUploadFormPhoto();
+      .then ((response) => {
+        if(!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        return response.json;
+      })
+
+      .then ((data) => {
+        console.log ('Все отправлено, нет проблем', data);
+        closeUploadFormPhoto();
+        buttonSendUploadFormPhoto.removeAttribute('disabled');
+      })
+
+      .catch ((error) => {
+        console.log ('Не отправилось ни-че-го', error);
+      });
+
+
   }
 });
 
