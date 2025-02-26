@@ -126,6 +126,16 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
+
+    const formData = new FormData (evt.target);
+
+    fetch ('https://31.javascript.htmlacademy.pro/kekstagram',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    );
+
     closeUploadFormPhoto();
   }
 });
