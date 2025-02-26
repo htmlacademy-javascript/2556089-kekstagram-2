@@ -18,7 +18,7 @@ const showAlertMessage = () => {
 };
 
 const loadDataFromServer = () => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram/dat')
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
     .then((response) => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);
