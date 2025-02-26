@@ -1,4 +1,5 @@
 import { renderThumbnails } from './create-thumbnails';
+import {MAX_TIME_ALERT} from './const.js';
 let errorMessage;
 
 const loadDataFromServer = () => {
@@ -21,10 +22,10 @@ const loadDataFromServer = () => {
 
       document.body.appendChild(errorMessage);
 
-      // Удалить сообщение об ошибке через 5 секунд (5000 миллисекунд)
+
       setTimeout(() => {
         errorMessage.remove();
-      }, 5000); // 5000 миллисекунд = 5 секунд
+      }, MAX_TIME_ALERT);
     });
 };
 

@@ -16,13 +16,11 @@ const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview i
 
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
 
-
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
 });
-
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {

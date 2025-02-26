@@ -27,6 +27,7 @@ const STEP_SCALE_PHOTO = 25;
 const MIN_SCALE_VALUE_PHOTO = 25;
 const MAX_SCALE_VALUE_PHOTO = 100;
 const regexp = /^#[a-zа-яё0-9]+$/i;
+const MAX_TIME_ALERT = 5000;
 
 const NO_EFFECT_CONFIG = {
   range: {
@@ -83,4 +84,4 @@ const HEAT_CONFIG = {
   step: 0.1,
 };
 
-export {DESCRIPTION_PHOTOS, TEXT_COMMENTS, USERS_NAME, POSTS_ARRAY_LENGTH, minCountIdPost, maxCountIdPost, minCountIdPhoto, maxCountIdPhoto, minCountIdComment, maxCountIdComment, minCountAvatar, maxCountAvatar, minCountILikes, maxCountILikes, minCommentsCount, maxCommentsCount, MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp, NO_EFFECT_CONFIG, CHROME_CONFIG, SEPIA_CONFIG, MARVIN_CONFIG, PHOBOS_CONFIG, HEAT_CONFIG};
+export {DESCRIPTION_PHOTOS, TEXT_COMMENTS, USERS_NAME, POSTS_ARRAY_LENGTH, minCountIdPost, maxCountIdPost, minCountIdPhoto, maxCountIdPhoto, minCountIdComment, maxCountIdComment, minCountAvatar, maxCountAvatar, minCountILikes, maxCountILikes, minCommentsCount, maxCommentsCount, MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp, NO_EFFECT_CONFIG, CHROME_CONFIG, SEPIA_CONFIG, MARVIN_CONFIG, PHOBOS_CONFIG, HEAT_CONFIG, MAX_TIME_ALERT};
