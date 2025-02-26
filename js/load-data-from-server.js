@@ -1,37 +1,32 @@
-// const pageBody = document.querySelector('body');
-// const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
+import { renderThumbnails } from './create-thumbnails';
+let errorMessage;
 
-// const doLoadData = (onSuccess, onError) => fetch ('https://31.javascript.htmlacademy.pro/kekstagram/data')
-//   .then((response) => {
-//     if(response.ok) {
-//       return response.json ();
-//     }
+const loadDataFromServer = () => {
+  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`${response.status} ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      renderThumbnails(data);
+    })
+    .catch((error) => {
+      const pictureTemplate = document.querySelector('#error')
+        .content
+        .querySelector('.error');
 
-//     throw new Error (`${response.status} ${response.statusText}`);
-//   })
+      errorMessage = pictureTemplate.cloneNode(true);
 
-//   .then((data) => {
-//     onSuccess (data);
-//   })
+      document.body.appendChild(errorMessage);
 
-//   .catch ((err) => {
-//     onError(err);
-//   });
+      // Удалить сообщение об ошибке через 5 секунд (5000 миллисекунд)
+      setTimeout(() => {
+        errorMessage.remove();
+      }, 5000); // 5000 миллисекунд = 5 секунд
+    });
+};
 
-// export {doLoadData};
-
-
-// fetch ('https://31.javascript.htmlacademy.pro/kekstagram',
-//   {
-//     method: 'POST',
-//     body: new FormData (uploadFormPhoto),
-//   },
-// )
-
-//   .then((response) => response.json ())
-//   .then((data) => {
-//     console.log (uploadFormPhoto);
-//     console.log (data);
-//   });
-
+export {loadDataFromServer};
 
