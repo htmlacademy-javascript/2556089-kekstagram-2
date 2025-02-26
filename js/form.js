@@ -1,13 +1,6 @@
 import {isEscapeKey} from './utils.js';
-
-const MAX_HASHTAG_SYMBOLS = 20;
-const MAX_COMMENT_SYMBOLS = 140;
-const MAX_QUANTITY_HASHTAGS = 5;
-const DEFAULT_SCALE_PHOTO = 100;
-const STEP_SCALE_PHOTO = 25;
-const MIN_SCALE_VALUE_PHOTO = 25;
-const MAX_SCALE_VALUE_PHOTO = 100;
-const regexp = /^#[a-zа-яё0-9]+$/i;
+import {createSliderEffects, applyOriginalEffect} from './create-slider-effects.js';
+import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp} from './const.js';
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
@@ -23,140 +16,6 @@ const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview img');
 
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
-const sliderElement = uploadFormPhoto.querySelector('.effect-level__slider');// слайдер
-const sliderElementContainer = uploadFormPhoto.querySelector('.img-upload__effect-level');// контейнер слайдера
-const effectsList = uploadFormPhoto.querySelector('.effects__list'); // список эффектов
-
-
-const radioButtonNoneEffects = uploadFormPhoto.querySelector('#effect-none');
-const radioButtonEffecСhrom = uploadFormPhoto.querySelector('#effect-chrome');
-
-const radioButtonEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
-const radioButtonEffectMarvin = uploadFormPhoto.querySelector('#effect-marvin');
-const radioButtonEffectPhobos = uploadFormPhoto.querySelector('#effect-phobos');
-const radioButtonEffectHeat = uploadFormPhoto.querySelector('#effect-heat');
-
-
-const showSliderElement = () => {
-  sliderElement.classList.remove('hidden');
-  sliderElementContainer.classList.remove('hidden');
-  uploadPhotoPreview.style.filter = '';
-};
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 0,
-  },
-  start: 0,
-  step: 0,
-  connect: 'lower',
-});
-
-
-effectsList.addEventListener ('change', () => {
-
-  if (radioButtonNoneEffects.checked) {
-    uploadPhotoPreview.style.filter = '';
-    sliderElement.classList.add('hidden');
-    sliderElementContainer.classList.add('hidden');
-  }
-
-  if (radioButtonEffecСhrom.checked) {
-
-    showSliderElement();
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 0,
-      step: 0.1,
-    });
-
-    sliderElement.noUiSlider.on('update', () => {
-      const currentEffectValue = sliderElement.noUiSlider.get ();
-      uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
-      changeEffectInput.setAttribute('value', currentEffectValue);
-    });
-  }
-
-  if (radioButtonEffectSepia.checked) {
-
-    showSliderElement();
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 0,
-      step: 0.1,
-    });
-
-    sliderElement.noUiSlider.on('update', () => {
-      const currentEffectValue = sliderElement.noUiSlider.get ();
-      uploadPhotoPreview.style.filter = `sepia(${currentEffectValue})`;
-      changeEffectInput.setAttribute('value', currentEffectValue);
-    });
-  }
-
-  if (radioButtonEffectMarvin.checked) {
-
-    showSliderElement();
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      start: 0,
-      step: 1,
-    });
-
-    sliderElement.noUiSlider.on('update', (value) => {
-      const currentEffectValue = sliderElement.noUiSlider.get (value);
-      uploadPhotoPreview.style.filter = `invert(${currentEffectValue}%)`;
-      changeEffectInput.setAttribute('value', currentEffectValue);
-    });
-  }
-
-  if (radioButtonEffectPhobos.checked) {
-
-    showSliderElement();
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3,
-      },
-      start: 0,
-      step: 0.1,
-    });
-
-    sliderElement.noUiSlider.on('update', () => {
-      const currentEffectValue = sliderElement.noUiSlider.get ();
-      uploadPhotoPreview.style.filter = `blur(${currentEffectValue}px)`;
-      changeEffectInput.setAttribute('value', currentEffectValue);
-    });
-  }
-
-  if (radioButtonEffectHeat.checked) {
-
-    showSliderElement();
-    sliderElement.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3,
-      },
-      start: 1,
-      step: 0.1,
-    });
-
-    sliderElement.noUiSlider.on('update', () => {
-      const currentEffectValue = sliderElement.noUiSlider.get ();
-      uploadPhotoPreview.style.filter = `brightness(${currentEffectValue})`;
-      changeEffectInput.setAttribute('value', currentEffectValue);
-    });
-  }
-});
 
 
 const pristine = new Pristine(uploadFormPhoto, {
@@ -176,7 +35,6 @@ const onDocumentKeydown = (evt) => {
     evt.stopPropagation();
     closeUploadFormPhoto();
     resetScalePhoto();
-    // uploadPhotoPreview.reset();
     uploadFormPhoto.reset();
     uploadPhotoPreview.style.filter = '';
     changeEffectInput.value = '';
@@ -189,6 +47,7 @@ function openUploadFormPhoto () {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
+    applyOriginalEffect();
   });
 }
 
@@ -199,7 +58,6 @@ function closeUploadFormPhoto () {
   pristine.reset();
   uploadFileControl.value = '';
   resetScalePhoto();
-  // uploadPhotoPreview.reset();
   uploadFormPhoto.reset();
   uploadPhotoPreview.style.filter = '';
   changeEffectInput.value = '';
@@ -271,7 +129,6 @@ pristine.addValidator(commentInput, (value) => {
 'Максимальное количество символов: 140');
 
 uploadFormPhoto.addEventListener('submit', (evt) => {
-  console.log(evt);
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
@@ -322,5 +179,7 @@ buttonScaleControlBigger.addEventListener ('click', () => {
   }
 
 });
+
+createSliderEffects ();
 
 export {openUploadFormPhoto};
