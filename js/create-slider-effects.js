@@ -1,3 +1,5 @@
+import {NO_EFFECT_CONFIG, CHROME_CONFIG, SEPIA_CONFIG, MARVIN_CONFIG, PHOBOS_CONFIG, HEAT_CONFIG} from './const.js';
+
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
 const sliderElement = uploadFormPhoto.querySelector('.effect-level__slider');// слайдер
@@ -7,8 +9,7 @@ const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview i
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
 
 const radioButtonNoneEffects = uploadFormPhoto.querySelector('#effect-none');
-const radioButtonEffectСhrom = uploadFormPhoto.querySelector('#effect-chrome');
-
+const radioButtonEffectСhrome = uploadFormPhoto.querySelector('#effect-chrome');
 const radioButtonEffectSepia = uploadFormPhoto.querySelector('#effect-sepia');
 const radioButtonEffectMarvin = uploadFormPhoto.querySelector('#effect-marvin');
 const radioButtonEffectPhobos = uploadFormPhoto.querySelector('#effect-phobos');
@@ -20,23 +21,14 @@ const applyOriginalEffect = () => {
   sliderElementContainer.classList.add('hidden');
 };
 
+const showSliderElement = () => {
+  sliderElement.classList.remove('hidden');
+  sliderElementContainer.classList.remove('hidden');
+  uploadPhotoPreview.style.filter = '';
+};
 const createSliderEffects = () => {
 
-  const showSliderElement = () => {
-    sliderElement.classList.remove('hidden');
-    sliderElementContainer.classList.remove('hidden');
-    uploadPhotoPreview.style.filter = '';
-  };
-
-  noUiSlider.create(sliderElement, {
-    range: {
-      min: 0,
-      max: 0,
-    },
-    start: 0,
-    step: 0,
-    connect: 'lower',
-  });
+  noUiSlider.create(sliderElement, NO_EFFECT_CONFIG);
 
   effectsList.addEventListener ('change', () => {
 
@@ -44,17 +36,10 @@ const createSliderEffects = () => {
       applyOriginalEffect();
     }
 
-    if (radioButtonEffectСhrom.checked) {
+    if (radioButtonEffectСhrome.checked) {
 
       showSliderElement();
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
+      sliderElement.noUiSlider.updateOptions(CHROME_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
         const currentEffectValue = sliderElement.noUiSlider.get ();
@@ -66,14 +51,7 @@ const createSliderEffects = () => {
     if (radioButtonEffectSepia.checked) {
 
       showSliderElement();
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 1,
-        },
-        start: 1,
-        step: 0.1,
-      });
+      sliderElement.noUiSlider.updateOptions(SEPIA_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
         const currentEffectValue = sliderElement.noUiSlider.get ();
@@ -85,14 +63,7 @@ const createSliderEffects = () => {
     if (radioButtonEffectMarvin.checked) {
 
       showSliderElement();
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 100,
-        },
-        start: 100,
-        step: 1,
-      });
+      sliderElement.noUiSlider.updateOptions(MARVIN_CONFIG);
 
       sliderElement.noUiSlider.on('update', (value) => {
         const currentEffectValue = sliderElement.noUiSlider.get (value);
@@ -104,14 +75,7 @@ const createSliderEffects = () => {
     if (radioButtonEffectPhobos.checked) {
 
       showSliderElement();
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 0,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
+      sliderElement.noUiSlider.updateOptions(PHOBOS_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
         const currentEffectValue = sliderElement.noUiSlider.get ();
@@ -123,14 +87,7 @@ const createSliderEffects = () => {
     if (radioButtonEffectHeat.checked) {
 
       showSliderElement();
-      sliderElement.noUiSlider.updateOptions({
-        range: {
-          min: 1,
-          max: 3,
-        },
-        start: 3,
-        step: 0.1,
-      });
+      sliderElement.noUiSlider.updateOptions(HEAT_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
         const currentEffectValue = sliderElement.noUiSlider.get ();

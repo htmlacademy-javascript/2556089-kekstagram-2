@@ -22,7 +22,7 @@ const renderComment = (comment)=> {
 
   commentImg.src = comment.avatar;
   commentImg.alt = comment.name;
-  commentText.textContent = comment.comment;
+  commentText.textContent = comment.message;
   return newCommentElement;
 };
 

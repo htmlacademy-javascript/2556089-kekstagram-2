@@ -1,33 +1,26 @@
 import {isEscapeKey} from './utils.js';
 import {createSliderEffects, applyOriginalEffect} from './create-slider-effects.js';
-import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, DEFAULT_SCALE_PHOTO, STEP_SCALE_PHOTO, MIN_SCALE_VALUE_PHOTO,MAX_SCALE_VALUE_PHOTO, regexp} from './const.js';
+import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, regexp, BASE_URL, Route} from './const.js';
+import {changeScalePhoto, resetScalePhoto} from './change-scale-photo.js';
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
 const uploadFileControl = uploadFormPhoto.querySelector('#upload-file'); // Находим поле для загрузки файла
 const photoEditorForm = uploadFormPhoto.querySelector ('.img-upload__overlay'); // Находим форму редактирования фото
 const buttonResetUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__cancel'); // Находим кнопку закрытия формы
+const buttonSendUploadFormPhoto = uploadFormPhoto.querySelector('.img-upload__submit');
 const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// поле для ввода хэштегов
 const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
 
-const buttonScaleControlSmaller = uploadFormPhoto.querySelector('.scale__control--smaller');
-const buttonScaleControlBigger = uploadFormPhoto.querySelector('.scale__control--bigger');
-const scaleValueInput = uploadFormPhoto.querySelector('.scale__control--value');
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview img');
 
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
-
 
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
 });
-
-const resetScalePhoto = () => {
-  uploadPhotoPreview.style.transform = 'scale(1)';
-  scaleValueInput.setAttribute('value', `${DEFAULT_SCALE_PHOTO }%`);
-};
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
@@ -132,54 +125,41 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
   if (isValid) {
-    closeUploadFormPhoto();
+
+    buttonSendUploadFormPhoto.setAttribute('disabled', 'true');
+
+    const formData = new FormData (evt.target);
+
+    fetch (`${BASE_URL}${Route.SEND_DATA}`,
+      {
+        method: 'POST',
+        body: formData,
+      })
+
+      .then ((response) => {
+        if(!response.ok) {
+          throw new Error(`${response.status} ${response.statusText}`);
+        }
+        return response.json;
+      })
+
+      .then ((data) => {
+        console.log ('Все отправлено, нет проблем', data);
+        closeUploadFormPhoto();
+        buttonSendUploadFormPhoto.removeAttribute('disabled');
+      })
+
+      .catch ((error) => {
+        console.log ('Не отправилось ни-че-го', error);
+      });
+
+
   }
 });
 
 buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
 
-buttonScaleControlSmaller.addEventListener ('click', () => {
-
-  const currentValueInput = parseFloat(scaleValueInput.value.slice(0, -1));
-
-  if (currentValueInput > MIN_SCALE_VALUE_PHOTO) {
-
-    const newScaleValueInput = currentValueInput - STEP_SCALE_PHOTO;
-    scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
-    scaleValueInput.value = `${newScaleValueInput }%`;
-    const scaleValue = newScaleValueInput / 100;
-    uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
-
-    if (newScaleValueInput === MIN_SCALE_VALUE_PHOTO) {
-      buttonScaleControlSmaller.setAttribute('disabled', '');
-    }
-    if (newScaleValueInput < MAX_SCALE_VALUE_PHOTO) {
-      buttonScaleControlBigger.removeAttribute ('disabled');
-    }
-  }
-});
-
-buttonScaleControlBigger.addEventListener ('click', () => {
-  const currentValueInput = parseFloat(scaleValueInput.value.slice(0, -1));
-
-  if (currentValueInput < MAX_SCALE_VALUE_PHOTO) {
-
-    const newScaleValueInput = currentValueInput + STEP_SCALE_PHOTO;
-    scaleValueInput.setAttribute('value', `${newScaleValueInput }%`);
-    scaleValueInput.value = `${newScaleValueInput }%`;
-    const scaleValue = newScaleValueInput / 100;
-    uploadPhotoPreview.style.transform = `scale(${scaleValue})`;
-
-    if (newScaleValueInput > MIN_SCALE_VALUE_PHOTO) {
-      buttonScaleControlSmaller.removeAttribute('disabled');
-      if (newScaleValueInput === MAX_SCALE_VALUE_PHOTO) {
-        buttonScaleControlBigger.setAttribute('disabled', '');
-      }
-    }
-  }
-
-});
-
 createSliderEffects ();
+changeScalePhoto ();
 
 export {openUploadFormPhoto};
