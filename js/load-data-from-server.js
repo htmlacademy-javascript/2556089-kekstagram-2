@@ -1,5 +1,5 @@
 import { renderThumbnails } from './create-thumbnails';
-import {MAX_TIME_ALERT} from './const.js';
+import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
 let errorMessage;
 
 const showAlertMessage = () => {
@@ -18,7 +18,7 @@ const showAlertMessage = () => {
 };
 
 const loadDataFromServer = () => {
-  fetch('https://31.javascript.htmlacademy.pro/kekstagram/data')
+  fetch(`${BASE_URL}${Route.GET_DATA}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error(`${response.status} ${response.statusText}`);

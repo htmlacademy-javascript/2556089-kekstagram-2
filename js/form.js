@@ -1,6 +1,6 @@
 import {isEscapeKey} from './utils.js';
 import {createSliderEffects, applyOriginalEffect} from './create-slider-effects.js';
-import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, regexp} from './const.js';
+import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, regexp, BASE_URL, Route} from './const.js';
 import {changeScalePhoto, resetScalePhoto} from './change-scale-photo.js';
 
 const pageBody = document.querySelector('body');
@@ -130,7 +130,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 
     const formData = new FormData (evt.target);
 
-    fetch ('https://31.javascript.htmlacademy.pro/kekstagram',
+    fetch (`${BASE_URL}${Route.SEND_DATA}`,
       {
         method: 'POST',
         body: formData,
