@@ -1,6 +1,8 @@
 import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
 let errorMessage;
+const filtersGroup = document.querySelector('.img-filters');
+
 
 const showAlertMessage = () => {
   const pictureTemplate = document.querySelector('#error')
@@ -27,8 +29,10 @@ const loadDataFromServer = () => {
     })
     .then((data) => {
       renderThumbnails(data);
+      filtersGroup.classList.remove('img-filters--inactive');
+
     })
-    .catch((error) => {
+    .catch(() => {
       showAlertMessage ();
     });
 };
