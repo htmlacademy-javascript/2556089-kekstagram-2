@@ -27,11 +27,14 @@ const getRandomElements = (array, count) => {
 
 const applyFilters = () => {
 
+
   defaultFilterButton.addEventListener ('click', () => {
     resetActiveClassButton ();
     defaultFilterButton.classList.add ('img-filters__button--active');
     renderThumbnails(thumbnailList);
+
   });
+
 
   discussedFilterButton.addEventListener ('click', () => {
     resetActiveClassButton ();
