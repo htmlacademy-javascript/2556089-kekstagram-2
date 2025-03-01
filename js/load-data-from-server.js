@@ -1,5 +1,6 @@
 import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
+import { initFilters } from './apply-filters.js';
 let errorMessage;
 const filtersGroup = document.querySelector('.img-filters');
 
@@ -30,6 +31,7 @@ const loadDataFromServer = () => {
     .then((data) => {
       renderThumbnails(data);
       filtersGroup.classList.remove('img-filters--inactive');
+      initFilters (data);
 
     })
     .catch(() => {
