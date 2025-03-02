@@ -46,6 +46,7 @@ const createSliderEffects = () => {
           const currentEffectValue = sliderElement.noUiSlider.get ();
           uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
           changeEffectInput.setAttribute('value', currentEffectValue);
+          changeEffectInput.value = currentEffectValue;
         }
       });
     }
@@ -60,6 +61,7 @@ const createSliderEffects = () => {
           const currentEffectValue = sliderElement.noUiSlider.get ();
           uploadPhotoPreview.style.filter = `sepia(${currentEffectValue})`;
           changeEffectInput.setAttribute('value', currentEffectValue);
+          changeEffectInput.value = currentEffectValue;
         }
       });
     }
@@ -74,6 +76,7 @@ const createSliderEffects = () => {
           const currentEffectValue = sliderElement.noUiSlider.get (value);
           uploadPhotoPreview.style.filter = `invert(${currentEffectValue}%)`;
           changeEffectInput.setAttribute('value', currentEffectValue);
+          changeEffectInput.value = currentEffectValue;
         }
       });
     }
@@ -88,6 +91,7 @@ const createSliderEffects = () => {
           const currentEffectValue = sliderElement.noUiSlider.get ();
           uploadPhotoPreview.style.filter = `blur(${currentEffectValue}px)`;
           changeEffectInput.setAttribute('value', currentEffectValue);
+          changeEffectInput.value = currentEffectValue;
         }
       });
     }
@@ -102,6 +106,7 @@ const createSliderEffects = () => {
           const currentEffectValue = sliderElement.noUiSlider.get ();
           uploadPhotoPreview.style.filter = `brightness(${currentEffectValue})`;
           changeEffectInput.setAttribute('value', currentEffectValue);
+          changeEffectInput.value = currentEffectValue;
         }
       });
     }
