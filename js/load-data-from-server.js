@@ -1,5 +1,5 @@
 import { renderThumbnails } from './create-thumbnails';
-import {MAX_TIME_ALERT, BASE_URL, Route, RERENDERED_DELAY} from './const.js';
+import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
 import { initFilters } from './apply-filters.js';
 // import { debounce } from './utils.js';
 
@@ -34,9 +34,6 @@ const loadDataFromServer = () => {
       filterGroup.classList.remove('img-filters--inactive');
       initFilters (data);
       renderThumbnails(data);
-      // setDefaultFilterButtonClick (debounce (() => renderThumbnails(data), RERENDERED_DELAY,));
-      // setdiscussedFilterButtonClick (debounce (() => renderThumbnails(data), RERENDERED_DELAY,));
-      // setrandomFilterButtonClick (debounce (() => renderThumbnails(data), RERENDERED_DELAY,));
 
     })
     .catch(() => {

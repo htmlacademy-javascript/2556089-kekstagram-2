@@ -144,15 +144,21 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
         return response.json;
       })
 
-      .then ((data) => {
-        console.log ('Все отправлено, нет проблем', data);
+      .then (() => {
+
         closeUploadFormPhoto();
-        buttonSendUploadFormPhoto.removeAttribute('disabled');
+
       })
 
-      .catch ((error) => {
-        console.log ('Не отправилось ни-че-го', error);
+      .catch (() => {
+
       });
+
+    // .finally (() => {
+
+    //   buttonSendUploadFormPhoto.removeAttribute('disabled');
+
+    // });
 
 
   }

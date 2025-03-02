@@ -1,4 +1,6 @@
 import { renderThumbnails } from './create-thumbnails.js';
+import { debounce } from './utils.js';
+import {RERENDERED_DELAY} from './const.js';
 
 const filtersGroup = document.querySelector('.img-filters');
 const filterButtons = filtersGroup.querySelectorAll('.img-filters__button');
@@ -24,14 +26,14 @@ const getRandomElements = (array, count) => {
   return shuffled.slice(0, count);
 };
 
+const renderThumbnailsDebounced = debounce (renderThumbnails, RERENDERED_DELAY);
 
 const applyFilters = () => {
-
 
   defaultFilterButton.addEventListener ('click', () => {
     resetActiveClassButton ();
     defaultFilterButton.classList.add ('img-filters__button--active');
-    renderThumbnails(thumbnailList);
+    renderThumbnailsDebounced(thumbnailList);
 
   });
 
@@ -50,7 +52,7 @@ const applyFilters = () => {
       return 0;
     });
 
-    renderThumbnails(sortedThumbnailsListByComments);
+    renderThumbnailsDebounced(sortedThumbnailsListByComments);
   });
 
 
@@ -60,9 +62,7 @@ const applyFilters = () => {
 
     const randomThumbnails = getRandomElements(thumbnailList, 10);
 
-    renderThumbnails(randomThumbnails);
-
-
+    renderThumbnailsDebounced(randomThumbnails);
   });
 };
 
