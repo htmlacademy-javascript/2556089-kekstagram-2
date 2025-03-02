@@ -145,22 +145,17 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       })
 
       .then (() => {
-
         closeUploadFormPhoto();
 
       })
 
       .catch (() => {
 
+      })
+
+      .finally (() => {
+        buttonSendUploadFormPhoto.removeAttribute('disabled');
       });
-
-    // .finally (() => {
-
-    //   buttonSendUploadFormPhoto.removeAttribute('disabled');
-
-    // });
-
-
   }
 });
 
