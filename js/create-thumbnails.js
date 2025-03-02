@@ -6,6 +6,10 @@ const renderThumbnails = (data) => {
     .content
     .querySelector('.picture');
 
+  const existingThumbnails = picturesList.querySelectorAll('.picture');
+  existingThumbnails.forEach((thumbnail) => thumbnail.remove());
+
+
   const picturesListFragment = document.createDocumentFragment();
   data.forEach ((picture) => {
     const newPictureElement = pictureTemplate.cloneNode(true);

@@ -1,13 +1,18 @@
 import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
+import { initFilters } from './apply-filters.js';
+// import { debounce } from './utils.js';
+
 let errorMessage;
+const filterGroup = document.querySelector('.img-filters');
+
 
 const showAlertMessage = () => {
-  const pictureTemplate = document.querySelector('#error')
+  const errorMessageTemplate = document.querySelector('#error')
     .content
     .querySelector('.error');
 
-  errorMessage = pictureTemplate.cloneNode(true);
+  errorMessage = errorMessageTemplate.cloneNode(true);
 
   document.body.appendChild(errorMessage);
 
@@ -26,9 +31,12 @@ const loadDataFromServer = () => {
       return response.json();
     })
     .then((data) => {
+      filterGroup.classList.remove('img-filters--inactive');
+      initFilters (data);
       renderThumbnails(data);
+
     })
-    .catch((error) => {
+    .catch(() => {
       showAlertMessage ();
     });
 };
