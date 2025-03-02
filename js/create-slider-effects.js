@@ -42,9 +42,11 @@ const createSliderEffects = () => {
       sliderElement.noUiSlider.updateOptions(CHROME_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
-        const currentEffectValue = sliderElement.noUiSlider.get ();
-        uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
-        changeEffectInput.setAttribute('value', currentEffectValue);
+        if (radioButtonEffectСhrome.checked) {
+          const currentEffectValue = sliderElement.noUiSlider.get ();
+          uploadPhotoPreview.style.filter = `grayscale(${currentEffectValue})`;
+          changeEffectInput.setAttribute('value', currentEffectValue);
+        }
       });
     }
 
@@ -54,9 +56,11 @@ const createSliderEffects = () => {
       sliderElement.noUiSlider.updateOptions(SEPIA_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
-        const currentEffectValue = sliderElement.noUiSlider.get ();
-        uploadPhotoPreview.style.filter = `sepia(${currentEffectValue})`;
-        changeEffectInput.setAttribute('value', currentEffectValue);
+        if (radioButtonEffectSepia.checked) {
+          const currentEffectValue = sliderElement.noUiSlider.get ();
+          uploadPhotoPreview.style.filter = `sepia(${currentEffectValue})`;
+          changeEffectInput.setAttribute('value', currentEffectValue);
+        }
       });
     }
 
@@ -66,9 +70,11 @@ const createSliderEffects = () => {
       sliderElement.noUiSlider.updateOptions(MARVIN_CONFIG);
 
       sliderElement.noUiSlider.on('update', (value) => {
-        const currentEffectValue = sliderElement.noUiSlider.get (value);
-        uploadPhotoPreview.style.filter = `invert(${currentEffectValue}%)`;
-        changeEffectInput.setAttribute('value', currentEffectValue);
+        if (radioButtonEffectMarvin.checked) {
+          const currentEffectValue = sliderElement.noUiSlider.get (value);
+          uploadPhotoPreview.style.filter = `invert(${currentEffectValue}%)`;
+          changeEffectInput.setAttribute('value', currentEffectValue);
+        }
       });
     }
 
@@ -78,9 +84,11 @@ const createSliderEffects = () => {
       sliderElement.noUiSlider.updateOptions(PHOBOS_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
-        const currentEffectValue = sliderElement.noUiSlider.get ();
-        uploadPhotoPreview.style.filter = `blur(${currentEffectValue}px)`;
-        changeEffectInput.setAttribute('value', currentEffectValue);
+        if (radioButtonEffectPhobos.checked) {
+          const currentEffectValue = sliderElement.noUiSlider.get ();
+          uploadPhotoPreview.style.filter = `blur(${currentEffectValue}px)`;
+          changeEffectInput.setAttribute('value', currentEffectValue);
+        }
       });
     }
 
@@ -90,9 +98,11 @@ const createSliderEffects = () => {
       sliderElement.noUiSlider.updateOptions(HEAT_CONFIG);
 
       sliderElement.noUiSlider.on('update', () => {
-        const currentEffectValue = sliderElement.noUiSlider.get ();
-        uploadPhotoPreview.style.filter = `brightness(${currentEffectValue})`;
-        changeEffectInput.setAttribute('value', currentEffectValue);
+        if (radioButtonEffectHeat.checked) {
+          const currentEffectValue = sliderElement.noUiSlider.get ();
+          uploadPhotoPreview.style.filter = `brightness(${currentEffectValue})`;
+          changeEffectInput.setAttribute('value', currentEffectValue);
+        }
       });
     }
   });

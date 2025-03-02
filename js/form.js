@@ -32,7 +32,6 @@ const onDocumentKeydown = (evt) => {
     uploadFormPhoto.reset();
     uploadPhotoPreview.style.filter = '';
     changeEffectInput.value = '';
-
   }
 };
 

@@ -1,4 +1,5 @@
 import {FILE_TYPES} from './const.js';
+
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form');
 const uploadFileControl = uploadFormPhoto.querySelector('#upload-file');
