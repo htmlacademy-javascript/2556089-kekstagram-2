@@ -1,7 +1,7 @@
 import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT, BASE_URL, Route, RERENDERED_DELAY} from './const.js';
 import { initFilters } from './apply-filters.js';
-import { debounce } from './utils.js';
+// import { debounce } from './utils.js';
 
 let errorMessage;
 const filterGroup = document.querySelector('.img-filters');

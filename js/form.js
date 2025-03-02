@@ -2,6 +2,7 @@ import {isEscapeKey} from './utils.js';
 import {createSliderEffects, applyOriginalEffect} from './create-slider-effects.js';
 import {MAX_HASHTAG_SYMBOLS, MAX_COMMENT_SYMBOLS, MAX_QUANTITY_HASHTAGS, regexp, BASE_URL, Route} from './const.js';
 import {changeScalePhoto, resetScalePhoto} from './change-scale-photo.js';
+import {uploadFile} from './upload-file.js';
 
 const pageBody = document.querySelector('body');
 const uploadFormPhoto = pageBody.querySelector('.img-upload__form'); // Находим форму
@@ -41,6 +42,7 @@ function openUploadFormPhoto () {
     pageBody.classList.add('modal-open');
     document.addEventListener('keydown', onDocumentKeydown);
     applyOriginalEffect();
+    uploadFile ();
   });
 }
 
