@@ -8,11 +8,11 @@ const filterGroup = document.querySelector('.img-filters');
 
 
 const showAlertMessage = () => {
-  const pictureTemplate = document.querySelector('#error')
+  const errorMessageTemplate = document.querySelector('#error')
     .content
     .querySelector('.error');
 
-  errorMessage = pictureTemplate.cloneNode(true);
+  errorMessage = errorMessageTemplate.cloneNode(true);
 
   document.body.appendChild(errorMessage);
 
