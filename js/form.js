@@ -59,6 +59,7 @@ const onDocumentKeydown = (evt) => {
     }
   }
 };
+
 function openUploadFormPhoto () {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
