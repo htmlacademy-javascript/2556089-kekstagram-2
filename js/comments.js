@@ -1,4 +1,3 @@
-
 const START_STATE = 5;
 const STEP_COMMENTS = 5;
 
@@ -57,8 +56,6 @@ const showNextComments = () => {
   }
 };
 
-buttonLoadNewComments.addEventListener ('click',showNextComments);
-
 export const initCommentsCounter = (commentsData) => {
   commentsLimit = commentsData.length;
   currentState = START_STATE;
@@ -74,5 +71,7 @@ export const initCommentsCounter = (commentsData) => {
   comments = commentsData;
   renderComments ();
 };
+
+buttonLoadNewComments.addEventListener ('click',showNextComments);
 
 export {renderComment};

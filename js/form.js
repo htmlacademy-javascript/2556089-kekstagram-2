@@ -75,7 +75,6 @@ pristine.addValidator(hashtagsInput, (value) => {
 pristine.addValidator(hashtagsInput, (value) => {
   const hashtagArray = value.trim().split(/\s+/);
 
-  console.log (hashtagArray);
   if (hashtagArray.length > MAX_QUANTITY_HASHTAGS) {
     return false;
   }
