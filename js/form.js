@@ -73,8 +73,9 @@ pristine.addValidator(hashtagsInput, (value) => {
 'Максимальное количество символов Хэштега: 20');
 
 pristine.addValidator(hashtagsInput, (value) => {
-  const hashtagArray = value.trim().split(' ');
+  const hashtagArray = value.trim().split(/\s+/);
 
+  console.log (hashtagArray);
   if (hashtagArray.length > MAX_QUANTITY_HASHTAGS) {
     return false;
   }
@@ -84,7 +85,7 @@ pristine.addValidator(hashtagsInput, (value) => {
 
 pristine.addValidator(hashtagsInput, (value) => {
 
-  const hashtagArray = value.trim().toLowerCase().split(' ');
+  const hashtagArray = value.trim().split(/\s+/);
   const hashtagSet = new Set(hashtagArray);
   if (hashtagSet.size !== hashtagArray.length) {
     return false;
@@ -100,7 +101,7 @@ pristine.addValidator(hashtagsInput, (value) => {
     return true;
   }
 
-  const hashtagArray = value.trim().split(' ');
+  const hashtagArray = value.trim().split(/\s+/);
 
   for (let i = 0; i < hashtagArray.length; i++) {
     const currentHashtag = hashtagArray[i];
