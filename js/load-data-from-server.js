@@ -1,16 +1,15 @@
 import { renderThumbnails } from './create-thumbnails';
 import {MAX_TIME_ALERT, BASE_URL, Route} from './const.js';
 import { initFilters } from './apply-filters.js';
-// import { debounce } from './utils.js';
 
 let errorMessage;
 const filterGroup = document.querySelector('.img-filters');
 
 
 const showAlertMessage = () => {
-  const errorMessageTemplate = document.querySelector('#error')
+  const errorMessageTemplate = document.querySelector('#data-error')
     .content
-    .querySelector('.error');
+    .querySelector('.data-error');
 
   errorMessage = errorMessageTemplate.cloneNode(true);
 
