@@ -14,8 +14,28 @@ const hashtagsInput = uploadFormPhoto.querySelector('.text__hashtags');// пол
 const commentInput = uploadFormPhoto.querySelector('.text__description'); // поле для ввода комментария
 
 const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview img');
-
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
+
+let errorFormMessage;
+
+const unsuccessfulSendFormMessage = () => {
+
+  const errorFormMessageTemplate = document.querySelector('#error')
+    .content
+    .querySelector('.error');
+
+  errorFormMessage = errorFormMessageTemplate.cloneNode(true);
+
+  document.body.appendChild(errorFormMessage);
+};
+
+const closeErrorFormMessage = () => {
+  const errorFormButton = document.querySelector('.error__button');
+  errorFormButton.addEventListener ('click', () => {
+    errorFormMessage.remove();
+  });
+
+};
 
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
@@ -24,17 +44,21 @@ const pristine = new Pristine(uploadFormPhoto, {
 });
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt) && document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
-    evt.preventDefault();
-    evt.stopPropagation();
-    closeUploadFormPhoto();
-    resetScalePhoto();
-    uploadFormPhoto.reset();
-    uploadPhotoPreview.style.filter = '';
-    changeEffectInput.value = '';
+  if (isEscapeKey(evt)) {
+
+    if (errorFormMessage) {
+      evt.preventDefault();
+      errorFormMessage.remove();
+      errorFormMessage = null;
+      return;
+    }
+
+    if (document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
+      evt.preventDefault();
+      closeUploadFormPhoto();
+    }
   }
 };
-
 function openUploadFormPhoto () {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
@@ -150,7 +174,8 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       })
 
       .catch (() => {
-
+        unsuccessfulSendFormMessage();
+        closeErrorFormMessage ();
       })
 
       .finally (() => {
@@ -158,6 +183,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       });
   }
 });
+
 
 buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
 

@@ -1,5 +1,3 @@
-
-
 const MAX_HASHTAG_SYMBOLS = 20;
 const MAX_COMMENT_SYMBOLS = 140;
 const MAX_QUANTITY_HASHTAGS = 5;
@@ -11,7 +9,6 @@ const regexp = /^#[a-zа-яё0-9]+$/i;
 const MAX_TIME_ALERT = 5000;
 const RERENDERED_DELAY = 500;
 const FILE_TYPES = ['jpg', 'jpeg', 'png', 'webp'];
-
 
 const NO_EFFECT_CONFIG = {
   range: {
