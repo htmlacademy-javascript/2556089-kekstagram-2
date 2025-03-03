@@ -85,7 +85,7 @@ pristine.addValidator(hashtagsInput, (value) => {
 
 pristine.addValidator(hashtagsInput, (value) => {
 
-  const hashtagArray = value.trim().split(/\s+/);
+  const hashtagArray = value.trim().toLowerCase().split(/\s+/);
   const hashtagSet = new Set(hashtagArray);
   if (hashtagSet.size !== hashtagArray.length) {
     return false;
