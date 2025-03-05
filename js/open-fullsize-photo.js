@@ -14,7 +14,7 @@ const clearOldComments = () => {
   comments.textContent = '';
 };
 
-const onButtoncloseFullPhotoClick = () => {
+const onButtonCloseFullPhotoClick = () => {
   fullPhoto.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -23,7 +23,7 @@ const onButtoncloseFullPhotoClick = () => {
 function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    onButtoncloseFullPhotoClick();
+    onButtonCloseFullPhotoClick();
   }
 }
 
@@ -51,6 +51,6 @@ const openFullPhoto = (picture) => {
   initCommentsCounter(picture.comments);
 };
 
-buttonCloseFullPhoto.addEventListener('click', onButtoncloseFullPhotoClick);
+buttonCloseFullPhoto.addEventListener('click', onButtonCloseFullPhotoClick);
 
 export {openFullPhoto};
