@@ -55,7 +55,7 @@ const onDocumentKeydown = (evt) => {
 
     if (document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
       evt.preventDefault();
-      onButtonResetUploadFormPhotoClick();
+      closeUploadFormPhoto();
     }
   }
 };
@@ -70,7 +70,7 @@ function openUploadFormPhoto () {
   });
 }
 
-function onButtonResetUploadFormPhotoClick () {
+function closeUploadFormPhoto () {
 
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
@@ -167,7 +167,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       })
 
       .then (() => {
-        onButtonResetUploadFormPhotoClick();
+        closeUploadFormPhoto();
 
       })
 
@@ -182,9 +182,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
   }
 });
 
-
-buttonResetUploadFormPhoto.addEventListener('click', onButtonResetUploadFormPhotoClick);
-
+buttonResetUploadFormPhoto.addEventListener('click', () => closeUploadFormPhoto());
 
 createSliderEffects ();
 changeScalePhoto ();
