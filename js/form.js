@@ -17,6 +17,7 @@ const uploadPhotoPreview = uploadFormPhoto.querySelector('.img-upload__preview i
 const changeEffectInput = uploadFormPhoto.querySelector('.effect-level__value');// здесь записываем value при движении ползунка.
 
 let errorFormMessage;
+let successfulFormMessage;
 
 const unsuccessfulSendFormMessage = () => {
 
@@ -37,6 +38,26 @@ const closeErrorFormMessage = () => {
 
 };
 
+const successfulSendFormMessage = () => {
+
+  const succsessfulFormMessageTemplate = document.querySelector('#success')
+    .content
+    .querySelector('.success');
+
+  successfulFormMessage = succsessfulFormMessageTemplate.cloneNode(true);
+
+  document.body.appendChild(successfulFormMessage);
+};
+
+const closeSuccessfulFormMessage = () => {
+  const successfulFormButton = document.querySelector('.success__button');
+  successfulFormButton.addEventListener ('click', () => {
+    successfulFormMessage.remove();
+    closeUploadFormPhoto();
+  });
+};
+
+
 const pristine = new Pristine(uploadFormPhoto, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
@@ -53,6 +74,14 @@ const onDocumentKeydown = (evt) => {
       return;
     }
 
+    if (successfulFormMessage) {
+      evt.preventDefault();
+      successfulFormMessage.remove();
+      successfulFormMessage = null;
+      closeUploadFormPhoto();
+      return;
+    }
+
     if (document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
       evt.preventDefault();
       closeUploadFormPhoto();
@@ -61,6 +90,13 @@ const onDocumentKeydown = (evt) => {
 };
 
 const onDocumentClick = (event) => {
+  if (event.target === successfulFormMessage) {
+
+    successfulFormMessage.remove();
+    successfulFormMessage = null;
+    closeUploadFormPhoto();
+  }
+
   if (event.target === errorFormMessage) {
     errorFormMessage.remove();
     errorFormMessage = null;
@@ -174,7 +210,8 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       })
 
       .then (() => {
-        closeUploadFormPhoto();
+        successfulSendFormMessage ();
+        closeSuccessfulFormMessage();
 
       })
 
