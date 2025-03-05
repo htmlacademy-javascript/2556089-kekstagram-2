@@ -37,15 +37,12 @@ const addDataInPhoto = (pictureData) => {
 
 const registerEventsForCloseFullPhoto = () => {
   document.addEventListener('keydown', onDocumentKeydown);
-  buttonCloseFullPhoto.addEventListener('click', closeFullPhoto, {once: true});
 };
-
 
 const openFullPhoto = (picture) => {
   fullPhoto.classList.remove('hidden');
   pageBody.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-
 
   pageBody.classList.add('modal-open');
   registerEventsForCloseFullPhoto ();
@@ -53,5 +50,7 @@ const openFullPhoto = (picture) => {
   clearOldComments();
   initCommentsCounter(picture.comments);
 };
+
+buttonCloseFullPhoto.addEventListener('click', () => closeFullPhoto());
 
 export {openFullPhoto};
