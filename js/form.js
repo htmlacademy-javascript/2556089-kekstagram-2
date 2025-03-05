@@ -60,6 +60,13 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const onDocumentClick = (event) => {
+  if (event.target === errorFormMessage) {
+    errorFormMessage.remove();
+    errorFormMessage = null;
+  }
+};
+
 function openUploadFormPhoto () {
   uploadFileControl.addEventListener('change', () => {
     photoEditorForm.classList.remove('hidden');
@@ -183,6 +190,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 });
 
 buttonResetUploadFormPhoto.addEventListener('click', () => closeUploadFormPhoto());
+window.addEventListener('click', onDocumentClick);
 
 createSliderEffects ();
 changeScalePhoto ();
