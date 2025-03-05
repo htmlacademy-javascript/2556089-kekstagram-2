@@ -7,7 +7,7 @@ const filterButtons = filtersGroup.querySelectorAll('.img-filters__button');
 const defaultFilterButton = filtersGroup.querySelector('#filter-default');
 const randomFilterButton = filtersGroup.querySelector('#filter-random');
 const discussedFilterButton = filtersGroup.querySelector('#filter-discussed');
-let thumbnailList = [];
+let thumbnails = [];
 
 
 const resetActiveClassButton = () => {
@@ -17,12 +17,12 @@ const resetActiveClassButton = () => {
 };
 
 const initFilters = (data) => {
-  thumbnailList = data;
+  thumbnails = data;
 
 };
 
-const getRandomElements = (array, count) => {
-  const shuffled = array.slice().sort(() => 0.5 - Math.random());
+const getRandomElements = (items, count) => {
+  const shuffled = items.slice().sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
@@ -33,7 +33,7 @@ const applyFilters = () => {
   defaultFilterButton.addEventListener ('click', () => {
     resetActiveClassButton ();
     defaultFilterButton.classList.add ('img-filters__button--active');
-    renderThumbnailsDebounced(thumbnailList);
+    renderThumbnailsDebounced(thumbnails);
 
   });
 
@@ -42,7 +42,7 @@ const applyFilters = () => {
     resetActiveClassButton ();
     discussedFilterButton.classList.add ('img-filters__button--active');
 
-    const sortedThumbnailsListByComments = thumbnailList.slice().sort((a, b) => {
+    const sortedThumbnailsByComments = thumbnails.slice().sort((a, b) => {
       if (a.comments < b.comments) {
         return 1;
       }
@@ -52,7 +52,7 @@ const applyFilters = () => {
       return 0;
     });
 
-    renderThumbnailsDebounced(sortedThumbnailsListByComments);
+    renderThumbnailsDebounced(sortedThumbnailsByComments);
   });
 
 
@@ -60,7 +60,7 @@ const applyFilters = () => {
     resetActiveClassButton ();
     randomFilterButton.classList.add ('img-filters__button--active');
 
-    const randomThumbnails = getRandomElements(thumbnailList, 10);
+    const randomThumbnails = getRandomElements(thumbnails, 10);
 
     renderThumbnailsDebounced(randomThumbnails);
   });

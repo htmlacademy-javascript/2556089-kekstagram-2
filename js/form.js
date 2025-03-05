@@ -55,7 +55,7 @@ const onDocumentKeydown = (evt) => {
 
     if (document.activeElement !== commentInput && document.activeElement !== hashtagsInput) {
       evt.preventDefault();
-      closeUploadFormPhoto();
+      onButtonResetUploadFormPhotoClick();
     }
   }
 };
@@ -70,7 +70,8 @@ function openUploadFormPhoto () {
   });
 }
 
-function closeUploadFormPhoto () {
+function onButtonResetUploadFormPhotoClick () {
+
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -81,6 +82,7 @@ function closeUploadFormPhoto () {
   uploadPhotoPreview.style.filter = '';
   changeEffectInput.value = '';
 }
+
 
 pristine.addValidator(hashtagsInput, (value) => {
 
@@ -100,21 +102,16 @@ pristine.addValidator(hashtagsInput, (value) => {
 pristine.addValidator(hashtagsInput, (value) => {
   const hashtagArray = value.trim().split(/\s+/);
 
-  if (hashtagArray.length > MAX_QUANTITY_HASHTAGS) {
-    return false;
-  }
-  return true;
+  return hashtagArray.length <= MAX_QUANTITY_HASHTAGS;
 },
+
 'Максимальное количество Хэштегов: 5');
 
 pristine.addValidator(hashtagsInput, (value) => {
 
   const hashtagArray = value.trim().toLowerCase().split(/\s+/);
   const hashtagSet = new Set(hashtagArray);
-  if (hashtagSet.size !== hashtagArray.length) {
-    return false;
-  }
-  return true;
+  return hashtagSet.size === hashtagArray.length;
 },
 
 'Хештеги не должны повторяться, are you nuts?');
@@ -170,7 +167,7 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
       })
 
       .then (() => {
-        closeUploadFormPhoto();
+        onButtonResetUploadFormPhotoClick();
 
       })
 
@@ -186,7 +183,8 @@ uploadFormPhoto.addEventListener('submit', (evt) => {
 });
 
 
-buttonResetUploadFormPhoto.addEventListener('click', closeUploadFormPhoto);
+buttonResetUploadFormPhoto.addEventListener('click', onButtonResetUploadFormPhotoClick);
+
 
 createSliderEffects ();
 changeScalePhoto ();

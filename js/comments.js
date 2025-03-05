@@ -39,10 +39,10 @@ const renderComments = () => {
   });
 };
 
-const showNextComments = () => {
+const onButtonLoadNewCommentsClick = () => {
 
   const restComments = commentsLimit - currentState;
-  const currentStep = restComments < STEP_COMMENTS ? restComments : STEP_COMMENTS; // ШАГ
+  const currentStep = restComments < STEP_COMMENTS ? restComments : STEP_COMMENTS;
 
   if (currentState < commentsLimit) {
     currentState += currentStep;
@@ -72,6 +72,6 @@ export const initCommentsCounter = (commentsData) => {
   renderComments ();
 };
 
-buttonLoadNewComments.addEventListener ('click',showNextComments);
+buttonLoadNewComments.addEventListener ('click',onButtonLoadNewCommentsClick);
 
 export {renderComment};
